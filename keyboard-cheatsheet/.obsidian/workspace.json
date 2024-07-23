@@ -30,9 +30,33 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "e47ccf9e477a8a5c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Firefox.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "ef56e04a643f0e67",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Windows.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -98,6 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Windows.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,6 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Windows.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Untitled.md"
+                "file": "Windows.md"
               }
             }
           }
@@ -157,10 +183,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ca6b9504ea04c592",
+  "active": "ef56e04a643f0e67",
   "lastOpenFiles": [
+    "Visual Studio.md",
+    "Citrix.md",
     "Firefox.md",
-    "Untitled.md",
     "Windows.md",
     "Welcome.md"
   ]
