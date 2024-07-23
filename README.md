@@ -5,6 +5,15 @@ A cheatsheet for keyboard shortcuts
 
 ## Firefox
 
+| Shortcut             | Description |
+| -------------------- | ----------- |
+| CTRL + T             | New Tab     |
+| CTRL + F4            | Close Tab   |
+| CTRL + TAB (+ SHIFT) | Switch Tab  |
+|                      |             |
+
+
+
 ## Visual Studio
 
 ## Citrix
