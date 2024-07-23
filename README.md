@@ -3,14 +3,20 @@ A cheatsheet for keyboard shortcuts
 
 ## Windows
 
+| Shortcut                                 | Description                      |
+| ---------------------------------------- | ---------------------------------|
+| WIN + 1,...,0                            | Open window 1,...0 from taskbar  |
+| WIN + T                                  | Focus windows taskbar            |
+
+
 ## Firefox
 
-| Shortcut             | Description |
-| -------------------- | ----------- |
-| CTRL + T             | New Tab     |
-| CTRL + F4            | Close Tab   |
-| CTRL + TAB (+ SHIFT) | Switch Tab  |
-|                      |             |
+| Shortcut                                 | Description                      |
+| ---------------------------------------- | -------------------------------- |
+| CTRL + T                                 | New Tab                          |
+| CTRL + F4                                | Close Tab                        |
+| CTRL + TAB (+ SHIFT)                     | Switch Tab                       |
+|                                          |                                  |
 
 
 
@@ -19,6 +25,6 @@ A cheatsheet for keyboard shortcuts
 ## Citrix
 
 
-| Shortcut           | Description                    |
-| ------------------ | ------------------------------ |
-| CTRL + ALT + BREAK | Display Desktop Viewer Toolbar |
+| Shortcut                             | Description                          |
+| ------------------------------------ | ------------------------------------ |
+| CTRL + ALT + BREAK                   | Display Desktop Viewer Toolbar       |
