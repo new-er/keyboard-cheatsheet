@@ -36,7 +36,7 @@ A cheatsheet for keyboard shortcuts
 | CTRL + T                                 | New Tab                          |
 | CTRL + F4                                | Close Tab                        |
 | CTRL + TAB (+ SHIFT)                     | Switch Tab                       |
-|                                          |                                  |
+| CTRL + R                                 | Reload                           |
 
 
 
