@@ -7,6 +7,7 @@ A cheatsheet for keyboard shortcuts
 | ---------------------------------------- | ---------------------------------|
 | WIN + 1,..,0                             | Open window 1,..,10 from taskbar |
 | WIN + T                                  | Focus windows taskbar            |
+| ALT + Shift + ←/→                        | Move Window (when in windows taskbar focus)|
 | WIN + Space                              | Switch language                  |
 | WIN + Shift + S                          | Take Screenshot/Video            |
 
@@ -37,6 +38,13 @@ A cheatsheet for keyboard shortcuts
 | CTRL + F4                                | Close Tab                        |
 | CTRL + TAB (+ SHIFT)                     | Switch Tab                       |
 | CTRL + R                                 | Reload                           |
+| F7                                       | Enter caret browsing mode        |
+
+
+## Keepass
+| Shortcut                                 | Description                      |
+| ---------------------------------------- | -------------------------------- |
+| CTRL + O                                 | Open                             |
 
 
 
