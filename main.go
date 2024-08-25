@@ -1,7 +1,6 @@
 package main
 
 import (
-    "fmt"
     "syscall"
     "unsafe"
     "golang.org/x/sys/windows"
@@ -42,7 +41,7 @@ func getWindow(funcName string) uintptr {
     hwnd, _, _ := proc.Call()
     return hwnd
 }
-
+/*
 func main() {
   for {
 		if hwnd := getWindow("GetForegroundWindow") ; hwnd != 0 {
@@ -50,4 +49,4 @@ func main() {
 			fmt.Println("window :", text, "# hwnd:", hwnd)
 		}
 	}
-}
+}*/
