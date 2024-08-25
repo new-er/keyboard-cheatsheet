@@ -42,130 +42,135 @@ func getWindowText(hwnd syscall.Handle, str *uint16, maxCount int32) (len int32,
 }
 
 func GetActiveWindowTitle() string {
-  g, _ := getForegroundWindow()
-  b := make([]uint16, 200)
-  _, err := getWindowText(g, &b[0], int32(len(b)))
-  if err != nil {
-    fmt.Println("getactivewindowtitle-error:", err)
-    return "error"
-  }
-  return syscall.UTF16ToString(b)
+	g, _ := getForegroundWindow()
+	b := make([]uint16, 200)
+	_, err := getWindowText(g, &b[0], int32(len(b)))
+	if err != nil {
+		fmt.Println("getactivewindowtitle-error:", err)
+		return "error"
+	}
+	return syscall.UTF16ToString(b)
 }
 
 type KeyCode int
 
 const (
-	CTRL KeyCode = iota
-	BACK
-	TAB
-	ENTER
-	SHIFT
-	ALT
-	CAPSLOCK
-	ESC
-	SPACE
-	PAGEUP
-	PAGEDOWN
-	END
-	LEFT
-	UP
-	RIGHT
-	DOWN
-	SELECT
-	PRINT
-	EXECUTE
-	PRINTSCREEN
-	INSERT
-	DELETE
-	HELP
-	LEFTWINDOWS
-	RIGHTWINDOWS
-	APPLICATIONS
-	SLEEP
-	PAD0
-	PAD1
-	PAD2
-	PAD3
-	PAD4
-	PAD5
-	PAD6
-	PAD7
-	PAD8
-	PAD9
-	MULTIPLY
-	ADD
-	SEPARATOR
-	SUBTRACT
-	DECIMAL
-	DIVIDE
-	F1
-	F2
-	F3
-	F4
-	F5
-	F6
-	F7
-	F8
-	F9
-	F10
-	F11
-	F12
-	NUMLOCK
-	SCROLLLOCK
-	LSHIFT
-	RSHIFT
-	LCTRL
-	RCTRL
-	LeftMENU
-	RightMENU
-	SEMICOLON
-	SLASH
-	BACKTICK
-	LEFTBRACKET
-	BACKSLASH
-	RIGHTBRACKET
-	SINGLEQUOTE
-	PERIOD
-	ZERO
-	ONE
-	TWO
-	THREE
-	FOUR
-	FIVE
-	SIX
-	SEVEN
-	EIGHT
-	NINE
-	A
-	B
-	C
-	D
-	E
-	F
-	G
-	H
-	I
-	J
-	K
-	L
-	M
-	N
-	O
-	P
-	Q
-	R
-	S
-	T
-	U
-	V
-	W
-	X
-	Y
-	Z
-	LBUTTON
-	RBUTTON
-	MBUTTON
-	UNKNOWN
+	CTRL              KeyCode = iota
+	BACK              KeyCode = iota
+	TAB               KeyCode = iota
+	ENTER             KeyCode = iota
+	SHIFT             KeyCode = iota
+	ALT               KeyCode = iota
+	CAPSLOCK          KeyCode = iota
+	ESC               KeyCode = iota
+	SPACE             KeyCode = iota
+	PAGEUP            KeyCode = iota
+	PAGEDOWN          KeyCode = iota
+	END               KeyCode = iota
+	LEFT              KeyCode = iota
+	UP                KeyCode = iota
+	RIGHT             KeyCode = iota
+	DOWN              KeyCode = iota
+	SELECT            KeyCode = iota
+	PRINT             KeyCode = iota
+	EXECUTE           KeyCode = iota
+	PRINTSCREEN       KeyCode = iota
+	INSERT            KeyCode = iota
+	DELETE            KeyCode = iota
+	HELP              KeyCode = iota
+	LEFTWINDOWS       KeyCode = iota
+	RIGHTWINDOWS      KeyCode = iota
+	APPLICATIONSELECT KeyCode = iota
+	SLEEP             KeyCode = iota
+	PAD0              KeyCode = iota
+	PAD1              KeyCode = iota
+	PAD2              KeyCode = iota
+	PAD3              KeyCode = iota
+	PAD4              KeyCode = iota
+	PAD5              KeyCode = iota
+	PAD6              KeyCode = iota
+	PAD7              KeyCode = iota
+	PAD8              KeyCode = iota
+	PAD9              KeyCode = iota
+	MULTIPLY          KeyCode = iota
+	ADD               KeyCode = iota
+	SEPARATOR         KeyCode = iota
+	SUBTRACT          KeyCode = iota
+	DECIMAL           KeyCode = iota
+	DIVIDE            KeyCode = iota
+	F1                KeyCode = iota
+	F2                KeyCode = iota
+	F3                KeyCode = iota
+	F4                KeyCode = iota
+	F5                KeyCode = iota
+	F6                KeyCode = iota
+	F7                KeyCode = iota
+	F8                KeyCode = iota
+	F9                KeyCode = iota
+	F10               KeyCode = iota
+	F11               KeyCode = iota
+	F12               KeyCode = iota
+	NUMLOCK           KeyCode = iota
+	SCROLLLOCK        KeyCode = iota
+	LSHIFT            KeyCode = iota
+	RSHIFT            KeyCode = iota
+	LCTRL             KeyCode = iota
+	RCTRL             KeyCode = iota
+	LeftMENU          KeyCode = iota
+	RightMENU         KeyCode = iota
+	SEMICOLON         KeyCode = iota
+	SLASH             KeyCode = iota
+	BACKTICK          KeyCode = iota
+	LEFTBRACKET       KeyCode = iota
+	BACKSLASH         KeyCode = iota
+	RIGHTBRACKET      KeyCode = iota
+	SINGLEQUOTE       KeyCode = iota
+	PERIOD            KeyCode = iota
+	ZERO              KeyCode = iota
+	ONE               KeyCode = iota
+	TWO               KeyCode = iota
+	THREE             KeyCode = iota
+	FOUR              KeyCode = iota
+	FIVE              KeyCode = iota
+	SIX               KeyCode = iota
+	SEVEN             KeyCode = iota
+	EIGHT             KeyCode = iota
+	NINE              KeyCode = iota
+	A                 KeyCode = iota
+	B                 KeyCode = iota
+	C                 KeyCode = iota
+	D                 KeyCode = iota
+	E                 KeyCode = iota
+	F                 KeyCode = iota
+	G                 KeyCode = iota
+	H                 KeyCode = iota
+	I                 KeyCode = iota
+	J                 KeyCode = iota
+	K                 KeyCode = iota
+	L                 KeyCode = iota
+	M                 KeyCode = iota
+	N                 KeyCode = iota
+	O                 KeyCode = iota
+	P                 KeyCode = iota
+	Q                 KeyCode = iota
+	R                 KeyCode = iota
+	S                 KeyCode = iota
+	T                 KeyCode = iota
+	U                 KeyCode = iota
+	V                 KeyCode = iota
+	W                 KeyCode = iota
+	X                 KeyCode = iota
+	Y                 KeyCode = iota
+	Z                 KeyCode = iota
+	LBUTTON           KeyCode = iota
+	RBUTTON           KeyCode = iota
+	MBUTTON           KeyCode = iota
+	ARROWUP           KeyCode = iota
+	ARROWDOWN         KeyCode = iota
+	ARROWLEFT         KeyCode = iota
+	ARROWRIGHT        KeyCode = iota
+  COMMA             KeyCode = iota
+	UNKNOWN           KeyCode = iota
 )
 
 func toKeycode(key int) KeyCode {
@@ -274,6 +279,30 @@ func toKeycode(key int) KeyCode {
 		return RBUTTON
 	case 0x04:
 		return MBUTTON
+	case 9:
+		return TAB
+  case 13:
+    return ENTER
+	case 16:
+		return SHIFT
+	case 17:
+		return CTRL
+	case 18:
+		return ALT
+	case 27:
+		return ESC
+	case 38:
+		return ARROWUP
+	case 37:
+		return ARROWLEFT
+	case 39:
+		return ARROWRIGHT
+	case 40:
+		return ARROWDOWN
+	case 160:
+		return LSHIFT
+  case 188:
+    return COMMA
 	}
 
 	fmt.Println("unknown key:", fmt.Sprintf("%d", key))
@@ -284,12 +313,22 @@ func GetPressedKeys() []KeyCode {
 	var keys []KeyCode
 	for KEY := 0; KEY <= 256; KEY++ {
 		Val, _, _ := procGetAsyncKeyState.Call(uintptr(KEY))
+		if Val == 0 {
+			continue
+		}
+		key := toKeycode(KEY)
+		if key == UNKNOWN {
+			continue
+		}
+		if key == LeftMENU {
+			continue
+		}
 		if Val == 32769 {
-			keys = append(keys, toKeycode(KEY))
+			keys = append(keys, key)
 		} else if Val == 32768 {
-			keys = append(keys, toKeycode(KEY))
+			keys = append(keys, key)
 		} else if Val == 1 {
-			keys = append(keys, toKeycode(KEY))
+			keys = append(keys, key)
 		} else if Val != 0 {
 			fmt.Println("unknown value:", Val, " key:", toKeycode(KEY))
 		}

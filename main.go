@@ -7,15 +7,29 @@ import (
 
 func main() {
 	fmt.Println("Starting keyboard cheatsheet...")
+	keyCombinations := NewKeyCombinationDefinition()
+	fmt.Println("Key combinations:", keyCombinations)
 
-  state := GetChangedStateOrNull()
+	state := GetChangedStateOrNull()
 
 	for {
-    state = GetChangedStateOrNull()
-    if state != nil {
-      fmt.Println("ActiveWindowTitle:", state.ActiveWindowTitle)
-      fmt.Println("PressedKeys:", state.PressedKeys)
-    }
+		state = GetChangedStateOrNull()
+		if state == nil {
+			continue
+		}
+
+		fmt.Println("ActiveWindowTitle:", state.ActiveWindowTitle)
+		fmt.Println("PressedKeys:", state.PressedKeys)
+
+		filtered := FilterByProgram(keyCombinations, []string{"windows", state.ActiveWindowTitle})
+		fmt.Println("Filtered by program:", filtered)
+
+		flattened := Flatten(filtered, func(group ProgramGroup) []KeyCombination {
+			return group.keyCombinations
+		})
+
+		sorted := SortByPressedKeys(flattened, state.PressedKeys)
+		fmt.Println("sorted by pressed keys:", sorted)
 	}
 }
 
