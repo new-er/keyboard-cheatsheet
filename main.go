@@ -3,55 +3,58 @@ package main
 import (
 	"fmt"
 	"reflect"
+	"time"
 )
 
 func main() {
+	repository := GetRepository()
+	repository.keyCombinations.SetValue(NewKeyCombinationDefinition())
+
+	go updatePressedKeys()
+	go updateActiveWindowTitle()
+	updateConsoleOutput()
+
 	fmt.Println("Starting keyboard cheatsheet...")
-	keyCombinations := NewKeyCombinationDefinition()
-	state := GetChangedStateOrNull()
+}
+
+func updateConsoleOutput() {
+	repository := GetRepository()
+	keyCombinationsChannel := repository.keyCombinations.Subscribe()
+	currentApplicationChannel := repository.currentApplication.Subscribe()
+	pressedKeysChannel := repository.pressedKeys.Subscribe()
 
 	for {
-		state = GetChangedStateOrNull()
-		if state == nil {
-			continue
+		select {
+		case keyCombinations := <-keyCombinationsChannel:
+			ConsoleWriteApplicationState(ApplicationState{ActiveWindowTitle: repository.currentApplication.GetValue(), AllKeyCombinations: keyCombinations, PressedKeys: repository.pressedKeys.GetValue()})
+		case currentApplication := <-currentApplicationChannel:
+			ConsoleWriteApplicationState(ApplicationState{ActiveWindowTitle: currentApplication, AllKeyCombinations: repository.keyCombinations.GetValue(), PressedKeys: repository.pressedKeys.GetValue()})
+		case pressedKeys := <-pressedKeysChannel:
+			ConsoleWriteApplicationState(ApplicationState{ActiveWindowTitle: repository.currentApplication.GetValue(), AllKeyCombinations: repository.keyCombinations.GetValue(), PressedKeys: pressedKeys})
 		}
-		ConsoleClearWrittenLines()
-
-		ConsoleWriteLine("ActiveWindowTitle: " + state.ActiveWindowTitle)
-		ConsoleWriteLine("PressedKeys: " + fmt.Sprint(state.PressedKeys))
-
-		filtered := FilterByApplications(keyCombinations, []string{"windows", state.ActiveWindowTitle})
-		//ConsoleWriteLine("Filtered by program: " + fmt.Sprint(filtered))
-		sorted := SortByPressedKeys(filtered, state.PressedKeys)
-		ConsoleWriteLine(fmt.Sprint(sorted))
 	}
 }
 
-var (
-	prevPressedKeys []KeyCode
-)
-
-func getPressedKeysOnChangeOrNull() []KeyCode {
-	currentPressedKeys := GetPressedKeys()
-	if !reflect.DeepEqual(prevPressedKeys, currentPressedKeys) {
-		prevPressedKeys = currentPressedKeys
-		return currentPressedKeys
+func updatePressedKeys() {
+	repository := GetRepository()
+	for {
+		pressedKeys := GetPressedKeys()
+		currentPressedKeys := repository.pressedKeys.GetValue()
+		if !reflect.DeepEqual(pressedKeys, currentPressedKeys) {
+			repository.pressedKeys.SetValue(pressedKeys)
+    }
+		time.Sleep(100)
 	}
-	return nil
 }
 
-var (
-	prevTitle string
-)
-
-func getActiveWindowTitleOnChangeOrEmtpy() string {
-	currentTitle := GetActiveWindowTitle()
-	if currentTitle == "error" {
-		return ""
+func updateActiveWindowTitle() {
+	repository := GetRepository()
+	for {
+		activeWindowTitle := GetActiveWindowTitle()
+		currentActiveWindowTitle := repository.currentApplication.GetValue()
+		if activeWindowTitle != currentActiveWindowTitle {
+			repository.currentApplication.SetValue(activeWindowTitle)
+		}
+		time.Sleep(100)
 	}
-	if currentTitle == prevTitle {
-		return ""
-	}
-	prevTitle = currentTitle
-	return currentTitle
 }

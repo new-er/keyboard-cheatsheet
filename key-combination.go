@@ -13,15 +13,10 @@ type KeyCombination struct {
 
 func NewKeyCombination(keys []KeyCode, description string, application string) KeyCombination {
 	return KeyCombination{
-		keys:        sortKeys(keys),
+		keys:        keys,
 		description: description,
 		application: application,
 	}
-}
-
-type KeyCombinationMatchingPair struct {
-	keyCombination KeyCombination
-	matching       int
 }
 
 func FilterByApplications(keyCombinations []KeyCombination, applications []string) []KeyCombination {
@@ -35,47 +30,42 @@ func FilterByApplications(keyCombinations []KeyCombination, applications []strin
 	})
 }
 
-func FilterByApplication(keyCombinations []KeyCombination, application string) []KeyCombination {
-	return Filter(keyCombinations, func(keyCombination KeyCombination) bool {
-		return strings.Contains(application, keyCombination.application)
+type IsPressedKeyCode struct {
+	key       KeyCode
+	isPressed bool
+}
+
+type IsPressedKeyCombination struct {
+	keys        []IsPressedKeyCode
+	description string
+	application string
+}
+
+func ToIsPressedKeyCombinations(keyCombinations []KeyCombination, pressedKeys []KeyCode) []IsPressedKeyCombination {
+	return Map(keyCombinations, func(keyCombination KeyCombination) IsPressedKeyCombination {
+		return ToIsPressedKeyCombination(keyCombination, pressedKeys)
 	})
 }
 
-func SortByPressedKeys(keyCombinations []KeyCombination, pressedKeys []KeyCode) []KeyCombination {
-	pairs := Map(keyCombinations, func(keyCombination KeyCombination) KeyCombinationMatchingPair {
-		return KeyCombinationMatchingPair{
-			keyCombination: keyCombination,
-			matching:       getMatching(keyCombination.keys, pressedKeys),
+func ToIsPressedKeyCombination(keyCombination KeyCombination, pressedKeys []KeyCode) IsPressedKeyCombination {
+	keys := Map(keyCombination.keys, func(key KeyCode) IsPressedKeyCode {
+		return IsPressedKeyCode{
+			key:       key,
+			isPressed: Contains(pressedKeys, key),
 		}
-	})
-	sort.Slice(pairs, func(i, j int) bool {
-		return pairs[i].matching > pairs[j].matching
 	})
 
-	return Map(pairs, func(pair KeyCombinationMatchingPair) KeyCombination {
-		return pair.keyCombination
-	})
-}
-
-func getMatching(keys1 []KeyCode, keys2 []KeyCode) int {
-	matching := 0
-	for i, key1 := range keys1 {
-		if i >= len(keys2) {
-			break
-		}
-		if key1 == keys2[i] {
-			matching++
-		}
+	return IsPressedKeyCombination{
+		keys:        keys,
+		description: keyCombination.description,
+		application: keyCombination.application,
 	}
-	return matching
 }
 
-func sortKeys(keys []KeyCode) []KeyCode {
-	keysCopy := make([]KeyCode, len(keys))
-	copy(keysCopy, keys)
-	less := func(i, j int) bool {
-		return i < j
-	}
-	sort.Slice(keysCopy, less)
-	return keysCopy
+func SortByPressedKeys(isPressedKeyCombinations []IsPressedKeyCombination) []IsPressedKeyCombination {
+	sort.Slice(isPressedKeyCombinations, func(i, j int) bool {
+		return len(isPressedKeyCombinations[i].keys) > len(isPressedKeyCombinations[j].keys)
+	})
+
+	return isPressedKeyCombinations
 }
