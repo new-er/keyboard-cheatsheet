@@ -48,15 +48,6 @@ func SortByPressedKeys(keyCombinations []KeyCombination, pressedKeys []KeyCode) 
 			matching:       getMatching(keyCombination.keys, pressedKeys),
 		}
 	})
-	if len(pressedKeys) > 0 {
-		pairs = Filter(pairs, func(pair KeyCombinationMatchingPair) bool {
-			return pair.matching > 0
-		})
-	}
-	pairs = Filter(pairs, func(pair KeyCombinationMatchingPair) bool {
-		return pair.matching > 0
-	})
-
 	sort.Slice(pairs, func(i, j int) bool {
 		return pairs[i].matching > pairs[j].matching
 	})

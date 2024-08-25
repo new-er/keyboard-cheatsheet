@@ -46,8 +46,8 @@ func GetActiveWindowTitle() string {
 	b := make([]uint16, 200)
 	_, err := getWindowText(g, &b[0], int32(len(b)))
 	if err != nil {
-		fmt.Println("getactivewindowtitle-error:", err)
-		return "error"
+		ConsoleWriteError(fmt.Sprintf("error: %s", err))
+		return fmt.Sprintf("error: %s", err)
 	}
 	return syscall.UTF16ToString(b)
 }
@@ -169,7 +169,7 @@ const (
 	ARROWDOWN         KeyCode = iota
 	ARROWLEFT         KeyCode = iota
 	ARROWRIGHT        KeyCode = iota
-  COMMA             KeyCode = iota
+	COMMA             KeyCode = iota
 	UNKNOWN           KeyCode = iota
 )
 
@@ -281,8 +281,8 @@ func toKeycode(key int) KeyCode {
 		return MBUTTON
 	case 9:
 		return TAB
-  case 13:
-    return ENTER
+	case 13:
+		return ENTER
 	case 16:
 		return SHIFT
 	case 17:
@@ -301,11 +301,11 @@ func toKeycode(key int) KeyCode {
 		return ARROWDOWN
 	case 160:
 		return LSHIFT
-  case 188:
-    return COMMA
+	case 188:
+		return COMMA
 	}
 
-	fmt.Println("unknown key:", fmt.Sprintf("%d", key))
+	ConsoleWriteError(fmt.Sprintf("unknown key: %d", key))
 	return UNKNOWN
 }
 
@@ -330,7 +330,7 @@ func GetPressedKeys() []KeyCode {
 		} else if Val == 1 {
 			keys = append(keys, key)
 		} else if Val != 0 {
-			fmt.Println("unknown value:", Val, " key:", toKeycode(KEY))
+      ConsoleWriteError(fmt.Sprintf("unknown value: %d key: %d", Val, toKeycode(KEY))) 
 		}
 	}
 	return keys

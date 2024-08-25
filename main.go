@@ -8,8 +8,6 @@ import (
 func main() {
 	fmt.Println("Starting keyboard cheatsheet...")
 	keyCombinations := NewKeyCombinationDefinition()
-	fmt.Println("Key combinations:", keyCombinations)
-
 	state := GetChangedStateOrNull()
 
 	for {
@@ -17,15 +15,15 @@ func main() {
 		if state == nil {
 			continue
 		}
+		ConsoleClearWrittenLines()
 
-		fmt.Println("ActiveWindowTitle:", state.ActiveWindowTitle)
-		fmt.Println("PressedKeys:", state.PressedKeys)
+		ConsoleWriteLine("ActiveWindowTitle: " + state.ActiveWindowTitle)
+		ConsoleWriteLine("PressedKeys: " + fmt.Sprint(state.PressedKeys))
 
-    filtered := FilterByApplications(keyCombinations, []string{"windows", state.ActiveWindowTitle})
-		fmt.Println("Filtered by program:", filtered)
-
+		filtered := FilterByApplications(keyCombinations, []string{"windows", state.ActiveWindowTitle})
+		//ConsoleWriteLine("Filtered by program: " + fmt.Sprint(filtered))
 		sorted := SortByPressedKeys(filtered, state.PressedKeys)
-		fmt.Println("sorted by pressed keys:", sorted)
+		ConsoleWriteLine(fmt.Sprint(sorted))
 	}
 }
 
