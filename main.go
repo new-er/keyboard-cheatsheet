@@ -21,14 +21,10 @@ func main() {
 		fmt.Println("ActiveWindowTitle:", state.ActiveWindowTitle)
 		fmt.Println("PressedKeys:", state.PressedKeys)
 
-		filtered := FilterByProgram(keyCombinations, []string{"windows", state.ActiveWindowTitle})
+    filtered := FilterByApplications(keyCombinations, []string{"windows", state.ActiveWindowTitle})
 		fmt.Println("Filtered by program:", filtered)
 
-		flattened := Flatten(filtered, func(group ProgramGroup) []KeyCombination {
-			return group.keyCombinations
-		})
-
-		sorted := SortByPressedKeys(flattened, state.PressedKeys)
+		sorted := SortByPressedKeys(filtered, state.PressedKeys)
 		fmt.Println("sorted by pressed keys:", sorted)
 	}
 }

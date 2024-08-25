@@ -2,23 +2,43 @@ package main
 
 import (
 	"sort"
+	"strings"
 )
 
 type KeyCombination struct {
 	keys        []KeyCode
 	description string
+	application string
 }
 
-func NewKeyCombination(keys []KeyCode, description string) KeyCombination {
+func NewKeyCombination(keys []KeyCode, description string, application string) KeyCombination {
 	return KeyCombination{
 		keys:        sortKeys(keys),
 		description: description,
+		application: application,
 	}
 }
 
 type KeyCombinationMatchingPair struct {
 	keyCombination KeyCombination
 	matching       int
+}
+
+func FilterByApplications(keyCombinations []KeyCombination, applications []string) []KeyCombination {
+	return Filter(keyCombinations, func(keyCombination KeyCombination) bool {
+		for _, application := range applications {
+			if strings.Contains(application, keyCombination.application) {
+				return true
+			}
+		}
+		return false
+	})
+}
+
+func FilterByApplication(keyCombinations []KeyCombination, application string) []KeyCombination {
+	return Filter(keyCombinations, func(keyCombination KeyCombination) bool {
+		return strings.Contains(application, keyCombination.application)
+	})
 }
 
 func SortByPressedKeys(keyCombinations []KeyCombination, pressedKeys []KeyCode) []KeyCombination {
