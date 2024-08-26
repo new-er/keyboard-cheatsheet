@@ -25,3 +25,13 @@ func Filter[T any](slice []T, fn func(T) bool) []T {
 	}
 	return result
 }
+
+func Count[T any](slice []T, fn func(T) bool) int {
+	count := 0
+	for _, v := range slice {
+		if fn(v) {
+			count++
+		}
+	}
+	return count
+}

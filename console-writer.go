@@ -12,10 +12,6 @@ func ConsoleWriteLine(text string) {
   writtenLines++
 }
 
-func ConsoleWriteError(error string) {
-  //ConsoleWriteLine("Error: " + error)
-}
-
 func ConsoleClearWrittenLines(){
   for i := 0; i < writtenLines; i++ {
     fmt.Print("\x1b[1A\x1b[2K")

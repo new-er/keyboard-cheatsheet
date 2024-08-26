@@ -1,60 +1,52 @@
 package main
 
 import (
-	"fmt"
-	"reflect"
+	"context"
 	"time"
 )
 
 func main() {
-	repository := GetRepository()
-	repository.keyCombinations.SetValue(NewKeyCombinationDefinition())
+	combinations := NewKeyCombinationDefinition()
+	activeWindowChannel := GetActiveWindowTitleChannel()
+	activeWindow := ""
+	pressedKeysChannel := GetPressedKeysChannel()
+	pressedKeys := []KeyCode{}
+	errorTextChannel := GetErrorChannel()
+	errorText := ""
 
-	go updatePressedKeys()
-	go updateActiveWindowTitle()
-	updateConsoleOutput()
-
-	fmt.Println("Starting keyboard cheatsheet...")
-}
-
-func updateConsoleOutput() {
-	repository := GetRepository()
-	keyCombinationsChannel := repository.keyCombinations.Subscribe()
-	currentApplicationChannel := repository.currentApplication.Subscribe()
-	pressedKeysChannel := repository.pressedKeys.Subscribe()
+	var cancelResetErrorText context.CancelFunc
+	resetErrorText := func(ctx context.Context) {
+		select {
+		case <-time.After(3 * time.Second):
+			errorTextChannel <- ""
+		case <-ctx.Done():
+		}
+	}
 
 	for {
 		select {
-		case keyCombinations := <-keyCombinationsChannel:
-			ConsoleWriteApplicationState(ApplicationState{ActiveWindowTitle: repository.currentApplication.GetValue(), AllKeyCombinations: keyCombinations, PressedKeys: repository.pressedKeys.GetValue()})
-		case currentApplication := <-currentApplicationChannel:
-			ConsoleWriteApplicationState(ApplicationState{ActiveWindowTitle: currentApplication, AllKeyCombinations: repository.keyCombinations.GetValue(), PressedKeys: repository.pressedKeys.GetValue()})
-		case pressedKeys := <-pressedKeysChannel:
-			ConsoleWriteApplicationState(ApplicationState{ActiveWindowTitle: repository.currentApplication.GetValue(), AllKeyCombinations: repository.keyCombinations.GetValue(), PressedKeys: pressedKeys})
+		case activeWindow = <-activeWindowChannel:
+		case pressedKeys = <-pressedKeysChannel:
+		case errorText = <-errorTextChannel:
+			if cancelResetErrorText != nil {
+				cancelResetErrorText()
+			}
+			var ctx context.Context
+			ctx, cancelResetErrorText = context.WithCancel(context.Background())
+			go resetErrorText(ctx)
 		}
-	}
-}
 
-func updatePressedKeys() {
-	repository := GetRepository()
-	for {
-		pressedKeys := GetPressedKeys()
-		currentPressedKeys := repository.pressedKeys.GetValue()
-		if !reflect.DeepEqual(pressedKeys, currentPressedKeys) {
-			repository.pressedKeys.SetValue(pressedKeys)
-    }
-		time.Sleep(100)
-	}
-}
+		filtered := FilterByApplications(combinations, []string{"windows", activeWindow})
+		transformedKeyCombinations := TransformIsPressed(filtered, pressedKeys)
+		sortedKeyCombinations := SortByPressedKeys(transformedKeyCombinations)
 
-func updateActiveWindowTitle() {
-	repository := GetRepository()
-	for {
-		activeWindowTitle := GetActiveWindowTitle()
-		currentActiveWindowTitle := repository.currentApplication.GetValue()
-		if activeWindowTitle != currentActiveWindowTitle {
-			repository.currentApplication.SetValue(activeWindowTitle)
-		}
-		time.Sleep(100)
+		ConsoleWriteApplicationState(ApplicationState{
+			ActiveWindowTitle:          activeWindow,
+			AllKeyCombinations:         combinations,
+			PressedKeys:                pressedKeys,
+			TransformedKeyCombinations: sortedKeyCombinations,
+			Error:                      errorText,
+		})
+
 	}
 }

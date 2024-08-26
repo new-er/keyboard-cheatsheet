@@ -41,7 +41,7 @@ type IsPressedKeyCombination struct {
 	application string
 }
 
-func ToIsPressedKeyCombinations(keyCombinations []KeyCombination, pressedKeys []KeyCode) []IsPressedKeyCombination {
+func TransformIsPressed(keyCombinations []KeyCombination, pressedKeys []KeyCode) []IsPressedKeyCombination {
 	return Map(keyCombinations, func(keyCombination KeyCombination) IsPressedKeyCombination {
 		return ToIsPressedKeyCombination(keyCombination, pressedKeys)
 	})
@@ -64,7 +64,13 @@ func ToIsPressedKeyCombination(keyCombination KeyCombination, pressedKeys []KeyC
 
 func SortByPressedKeys(isPressedKeyCombinations []IsPressedKeyCombination) []IsPressedKeyCombination {
 	sort.Slice(isPressedKeyCombinations, func(i, j int) bool {
-		return len(isPressedKeyCombinations[i].keys) > len(isPressedKeyCombinations[j].keys)
+		countI := Count(isPressedKeyCombinations[i].keys, func(key IsPressedKeyCode) bool {
+			return key.isPressed
+		})
+		countJ := Count(isPressedKeyCombinations[j].keys, func(key IsPressedKeyCode) bool {
+			return key.isPressed
+		})
+		return countI > countJ
 	})
 
 	return isPressedKeyCombinations
