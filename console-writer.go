@@ -36,7 +36,6 @@ func ConsoleWriteApplicationState(state ApplicationState) {
 	for _, keyCombination := range state.TransformedKeyCombinations {
 		ConsoleWriteKeyCombination(keyCombination)
 	}
-	MoveCursorTo(0, 0)
 }
 
 var (
@@ -64,7 +63,7 @@ func ConsoleWriteKeyCombination(keyCombination KeyCombinationView) {
 
 func Contains(slice []KeyCode, item KeyCode) bool {
 	for _, key := range slice {
-		if key == item {
+		if item.Matches(key) {
 			return true
 		}
 	}

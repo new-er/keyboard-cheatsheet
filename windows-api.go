@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"syscall"
 	"unsafe"
 
@@ -50,6 +51,21 @@ func GetActiveWindowTitle() string {
 }
 
 type KeyCode string
+
+func (k KeyCode) Matches(pressedKey KeyCode) bool {
+	kString := string(k)
+	pressedKeyString := string(pressedKey)
+	if strings.HasPrefix(kString, "<") && strings.HasSuffix(kString, ">") {
+		withoutBrackets := kString[1 : len(kString)-1]
+		split := strings.Split(withoutBrackets, "|")
+		for _, s := range split {
+			if s == pressedKeyString {
+				return true
+			}
+		}
+	}
+	return k == pressedKey
+}
 
 const (
 	CTRL              KeyCode = "CTRL"
