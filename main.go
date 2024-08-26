@@ -40,7 +40,7 @@ func main() {
 			go resetErrorText(ctx)
 		}
 
-		filtered := FilterByApplications(combinations, []string{"windows", activeWindow})
+		filtered := FilterByApplications(combinations, []string{"Windows", "PowerToys", activeWindow})
 		transformedKeyCombinations := ToKeyCombinationViews(filtered, pressedKeys)
 		sortedKeyCombinations := SortByPressedKeys(transformedKeyCombinations)
 
