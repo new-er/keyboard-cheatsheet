@@ -37,6 +37,8 @@ func ConsoleWriteApplicationState(state ApplicationState) {
 	for _, keyCombination := range state.TransformedKeyCombinations {
 		ConsoleWriteKeyCombination(keyCombination)
 	}
+
+	//ToTopLeft()
 }
 
 var (

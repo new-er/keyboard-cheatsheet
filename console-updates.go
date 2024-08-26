@@ -2,20 +2,16 @@ package main
 
 import (
 	"fmt"
-)
-
-var (
-	writtenLines int
+	"os"
+	"os/exec"
 )
 
 func WriteLine(text string) {
 	fmt.Println(text)
-	writtenLines++
 }
 
 func ClearLines() {
-	for i := 0; i < writtenLines; i++ {
-		fmt.Print("\x1b[1A\x1b[2K")
-	}
-	writtenLines = 0
+	cmd := exec.Command("cmd", "/c", "cls") // Clear console and reset cursor in Windows
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 }
