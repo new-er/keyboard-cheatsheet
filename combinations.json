@@ -1,4 +1,5 @@
-[
+[ 
+  { "Keys": ["/"],"Application": "Google Suche","Description": "Jump to search bar" },
   { "Keys": ["CTRL","T"],"Application": "Firefox","Description": "Open a new tab" },
   { "Keys": ["CTRL","W"],"Application": "Firefox","Description": "Close the current tab" },
   { "Keys": ["CTRL","F4"],"Application": "Firefox","Description": "Close the current tab" },
@@ -9,6 +10,7 @@
   { "Keys": ["CTRL","SHIFT","TAB"],"Application": "PowerShell","Description": "Create a new tab" },
   { "Keys": ["CTRL","O"],"Application": "KeePass","Description": "Open KeePass file" },
   { "Keys": ["CTRL","ALT", "BREAK"],"Application": "Citrix","Description": "Display Desktop Viewer Toolbar" },
+ 
   { "Keys": ["ALT","TAB"],"Application": "Windows","Description": "Switch between open apps" },
   { "Keys": ["WIN","<1|2|3|4|5|6|7|8|9|0>"],"Application": "Windows","Description": "Switch to application <1..10>" },
   { "Keys": ["WIN","T"],"Application": "Windows","Description": "Focus windows taskbar" },
