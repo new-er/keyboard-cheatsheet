@@ -2,6 +2,7 @@ package main
 
 import (
 	"reflect"
+	"time"
 )
 
 func GetPressedKeysChannel() chan []KeyCode {
@@ -15,6 +16,7 @@ func GetPressedKeysChannel() chan []KeyCode {
 				pressedKeysChannel <- pressedKeys
 				currentPressedKeys = pressedKeys
 			}
+			time.Sleep(100 * time.Millisecond)
 		}
 	}()
 	return pressedKeysChannel
@@ -31,6 +33,7 @@ func GetActiveWindowTitleChannel() chan string {
 				activeWindowTitleChannel <- activeWindowTitle
 				currentActiveWindowTitle = activeWindowTitle
 			}
+			time.Sleep(100 * time.Millisecond)
 		}
 	}()
 	return activeWindowTitleChannel
