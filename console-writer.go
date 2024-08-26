@@ -17,10 +17,12 @@ var (
 )
 
 func getRenderToggleText() string {
+	text := "◦"
 	if renderToggle {
-		return "•"
+		text = "•"
 	}
-	return "◦"
+	renderToggle = !renderToggle
+	return text
 }
 
 func ConsoleWriteApplicationState(state ApplicationState) {
@@ -29,16 +31,12 @@ func ConsoleWriteApplicationState(state ApplicationState) {
 	if len(state.Error) > 0 {
 		errorText = fmt.Sprint(colorRed, "[", state.Error, "]", colorReset)
 	}
-	WriteLine(fmt.Sprintf("[%s] Keyboard Cheatsheet %s", getRenderToggleText(), errorText))
-
-	WriteLine(state.ActiveWindowTitle)
-	WriteLine(fmt.Sprint(state.PressedKeys))
+	WriteLine(fmt.Sprintf("[%s] Keyboard Cheatsheet %s %s [%s]", getRenderToggleText(), errorText, fmt.Sprint(state.PressedKeys), state.ActiveWindowTitle))
 
 	for _, keyCombination := range state.TransformedKeyCombinations {
 		ConsoleWriteKeyCombination(keyCombination)
 	}
-
-	//ToTopLeft()
+	MoveCursorTo(0, 0)
 }
 
 var (
