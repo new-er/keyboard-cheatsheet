@@ -7,7 +7,7 @@ import (
 type ApplicationState struct {
 	ActiveWindowTitle          string
 	AllKeyCombinations         []KeyCombination
-	TransformedKeyCombinations []IsPressedKeyCombination
+	TransformedKeyCombinations []KeyCombinationView
 	PressedKeys                []KeyCode
 	Error                      string
 }
@@ -45,7 +45,7 @@ var (
 	colorGreen = "\u001b[32m"
 )
 
-func ConsoleWriteKeyCombination(keyCombination IsPressedKeyCombination) {
+func ConsoleWriteKeyCombination(keyCombination KeyCombinationView) {
 	keyCombinationDescription := keyCombination.description
 	keyCombinationApplication := keyCombination.application
 	keyCombinationKeys := []string{}

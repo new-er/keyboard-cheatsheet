@@ -43,7 +43,7 @@ func GetActiveWindowTitle() string {
 	b := make([]uint16, 200)
 	_, err := getWindowText(g, &b[0], int32(len(b)))
 	if err != nil {
-		PublishError(fmt.Sprintf("get active window error: %s", err))
+		WriteError(fmt.Sprintf("get active window error: %s", err))
 		return fmt.Sprintf("error: %s", err)
 	}
 	return syscall.UTF16ToString(b)
@@ -350,7 +350,7 @@ func toKeycode(key int) KeyCode {
 	case 189:
 		return SUBTRACT
 	}
-	PublishError(fmt.Sprintf("unknown key: %d", key))
+	WriteError(fmt.Sprintf("unknown key: %d", key))
 	return KeyCode(fmt.Sprintf("?(%d)", key))
 }
 
@@ -380,7 +380,7 @@ func GetPressedKeys() []KeyCode {
 		} else if event == 1 {
 			keys = append(keys, toKeycodes(i)...)
 		} else if event != 0 {
-			PublishError(fmt.Sprintf("unknown Val %d for key %s", event, toKeycodes(i)))
+			WriteError(fmt.Sprintf("unknown Val %d for key %s", event, toKeycodes(i)))
 		}
 	}
 	return keys

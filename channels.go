@@ -43,7 +43,7 @@ var (
 	errorChannel = make(chan string)
 )
 
-func PublishError(err string) {
+func WriteError(err string) {
 	errorChannel <- err
 }
 func GetErrorChannel() chan string {

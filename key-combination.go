@@ -1,77 +1,82 @@
 package main
 
 import (
-	"sort"
-	"strings"
+	"encoding/json"
+	"os"
 )
 
 type KeyCombination struct {
-	keys        []KeyCode
-	description string
-	application string
+	Keys        []KeyCode
+	Description string
+	Application string
 }
 
 func NewKeyCombination(keys []KeyCode, description string, application string) KeyCombination {
 	return KeyCombination{
-		keys:        keys,
-		description: description,
-		application: application,
+		Keys:        keys,
+		Description: description,
+		Application: application,
 	}
 }
 
-func FilterByApplications(keyCombinations []KeyCombination, applications []string) []KeyCombination {
-	return Filter(keyCombinations, func(keyCombination KeyCombination) bool {
-		for _, application := range applications {
-			if strings.Contains(application, keyCombination.application) {
-				return true
-			}
-		}
-		return false
-	})
-}
-
-type IsPressedKeyCode struct {
-	key       KeyCode
-	isPressed bool
-}
-
-type IsPressedKeyCombination struct {
-	keys        []IsPressedKeyCode
-	description string
-	application string
-}
-
-func TransformIsPressed(keyCombinations []KeyCombination, pressedKeys []KeyCode) []IsPressedKeyCombination {
-	return Map(keyCombinations, func(keyCombination KeyCombination) IsPressedKeyCombination {
-		return ToIsPressedKeyCombination(keyCombination, pressedKeys)
-	})
-}
-
-func ToIsPressedKeyCombination(keyCombination KeyCombination, pressedKeys []KeyCode) IsPressedKeyCombination {
-	keys := Map(keyCombination.keys, func(key KeyCode) IsPressedKeyCode {
-		return IsPressedKeyCode{
-			key:       key,
-			isPressed: Contains(pressedKeys, key),
-		}
-	})
-
-	return IsPressedKeyCombination{
-		keys:        keys,
-		description: keyCombination.description,
-		application: keyCombination.application,
+func NewKeyCombinationDefinition() []KeyCombination {
+	return []KeyCombination{
+		NewKeyCombination([]KeyCode{CTRL, T}, "Open a new tab", "Firefox"),
+		NewKeyCombination([]KeyCode{CTRL, SHIFT, T}, "Reopen the last closed tab", "Firefox"),
+		NewKeyCombination([]KeyCode{CTRL, F4}, "Close the current tab", "Firefox"),
+		NewKeyCombination([]KeyCode{CTRL, SHIFT, TAB}, "Create a new tab", "PowerShell"),
+		NewKeyCombination([]KeyCode{ALT, TAB}, "Switch between open apps", "windows"),
 	}
 }
 
-func SortByPressedKeys(isPressedKeyCombinations []IsPressedKeyCombination) []IsPressedKeyCombination {
-	sort.Slice(isPressedKeyCombinations, func(i, j int) bool {
-		countI := Count(isPressedKeyCombinations[i].keys, func(key IsPressedKeyCode) bool {
-			return key.isPressed
-		})
-		countJ := Count(isPressedKeyCombinations[j].keys, func(key IsPressedKeyCode) bool {
-			return key.isPressed
-		})
-		return countI > countJ
-	})
+func KeyCombinationsToJson(k []KeyCombination) (string, error) {
+	jsonData, err := json.MarshalIndent(k, "", "  ")
+	if err != nil {
+		return "", err
+	}
+	return string(jsonData), nil
+}
 
-	return isPressedKeyCombinations
+func KeyCombinationsFromJson(jsonData string) ([]KeyCombination, error) {
+	var k []KeyCombination
+	err := json.Unmarshal([]byte(jsonData), &k)
+	if err != nil {
+		return nil, err
+	}
+	return k, nil
+}
+
+func KeyCombinationsToFile(k []KeyCombination, filename string) error {
+	jsonData, err := KeyCombinationsToJson(k)
+	if err != nil {
+		return err
+	}
+	return WriteToFile(jsonData, filename)
+}
+
+func KeyCombinationsFromFileOrPanic(filename string) []KeyCombination {
+	k, err := KeyCombinationsFromFile(filename)
+	if err != nil {
+		panic(err)
+	}
+	return k
+}
+func KeyCombinationsFromFile(filename string) ([]KeyCombination, error) {
+	jsonData, err := ReadFromFile(filename)
+	if err != nil {
+		return nil, err
+	}
+	return KeyCombinationsFromJson(jsonData)
+}
+
+func WriteToFile(data string, filename string) error {
+	return os.WriteFile(filename, []byte(data), 0644)
+}
+
+func ReadFromFile(filename string) (string, error) {
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
 }

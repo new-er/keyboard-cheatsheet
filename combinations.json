@@ -1,0 +1,8 @@
+[
+  { "Keys": ["CTRL","T"],"Application": "Firefox","Description": "Open a new tab" },
+  { "Keys": ["CTRL","W"],"Application": "Firefox","Description": "Close the current tab" },
+  { "Keys": ["CTRL","SHIFT","T"],"Application": "Firefox","Description": "Reopen the last closed tab" },
+  { "Keys": ["CTRL","F4"],"Application": "Firefox","Description": "Close the current tab" },
+  { "Keys": ["CTRL","SHIFT","TAB"],"Application": "PowerShell","Description": "Create a new tab" },
+  { "Keys": ["ALT","TAB"],"Application": "windows","Description": "Switch between open apps" }
+]

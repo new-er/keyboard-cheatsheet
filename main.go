@@ -5,8 +5,12 @@ import (
 	"time"
 )
 
+const (
+	combinationsFile = "combinations.json"
+)
+
 func main() {
-	combinations := NewKeyCombinationDefinition()
+	combinations := KeyCombinationsFromFileOrPanic(combinationsFile)
 	activeWindowChannel := GetActiveWindowTitleChannel()
 	activeWindow := ""
 	pressedKeysChannel := GetPressedKeysChannel()
@@ -37,7 +41,7 @@ func main() {
 		}
 
 		filtered := FilterByApplications(combinations, []string{"windows", activeWindow})
-		transformedKeyCombinations := TransformIsPressed(filtered, pressedKeys)
+		transformedKeyCombinations := ToKeyCombinationViews(filtered, pressedKeys)
 		sortedKeyCombinations := SortByPressedKeys(transformedKeyCombinations)
 
 		ConsoleWriteApplicationState(ApplicationState{
