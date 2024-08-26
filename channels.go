@@ -16,7 +16,7 @@ func GetPressedKeysChannel() chan []KeyCode {
 				pressedKeysChannel <- pressedKeys
 				currentPressedKeys = pressedKeys
 			}
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(40 * time.Millisecond)
 		}
 	}()
 	return pressedKeysChannel
@@ -33,7 +33,7 @@ func GetActiveWindowTitleChannel() chan string {
 				activeWindowTitleChannel <- activeWindowTitle
 				currentActiveWindowTitle = activeWindowTitle
 			}
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(40 * time.Millisecond)
 		}
 	}()
 	return activeWindowTitleChannel
