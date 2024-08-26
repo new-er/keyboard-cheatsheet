@@ -64,6 +64,10 @@ func (k KeyCode) Matches(pressedKey KeyCode) bool {
 			}
 		}
 	}
+	if strings.HasPrefix(kString, "(") && strings.HasSuffix(kString, ")") {
+		withoutBrackets := kString[1 : len(kString)-1]
+		return withoutBrackets == pressedKeyString
+	}
 	return k == pressedKey
 }
 
