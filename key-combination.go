@@ -11,24 +11,6 @@ type KeyCombination struct {
 	Application string
 }
 
-func NewKeyCombination(keys []KeyCode, description string, application string) KeyCombination {
-	return KeyCombination{
-		Keys:        keys,
-		Description: description,
-		Application: application,
-	}
-}
-
-func NewKeyCombinationDefinition() []KeyCombination {
-	return []KeyCombination{
-		NewKeyCombination([]KeyCode{CTRL, T}, "Open a new tab", "Firefox"),
-		NewKeyCombination([]KeyCode{CTRL, SHIFT, T}, "Reopen the last closed tab", "Firefox"),
-		NewKeyCombination([]KeyCode{CTRL, F4}, "Close the current tab", "Firefox"),
-		NewKeyCombination([]KeyCode{CTRL, SHIFT, TAB}, "Create a new tab", "PowerShell"),
-		NewKeyCombination([]KeyCode{ALT, TAB}, "Switch between open apps", "windows"),
-	}
-}
-
 func KeyCombinationsToJson(k []KeyCombination) (string, error) {
 	jsonData, err := json.MarshalIndent(k, "", "  ")
 	if err != nil {

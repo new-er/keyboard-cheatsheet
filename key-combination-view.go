@@ -2,17 +2,17 @@ package main
 
 import (
 	"sort"
+	"strings"
 )
 
 type KeyCodeView struct {
-	key       KeyCode
+	key       string
 	isPressed bool
 }
-
 type KeyCombinationView struct {
 	keys        []KeyCodeView
 	description string
-	application string
+	Application string
 }
 
 func ToKeyCombinationViews(keyCombinations []KeyCombination, pressedKeys []KeyCode) []KeyCombinationView {
@@ -24,7 +24,7 @@ func ToKeyCombinationViews(keyCombinations []KeyCombination, pressedKeys []KeyCo
 func ToKeyCombinationView(keyCombination KeyCombination, pressedKeys []KeyCode) KeyCombinationView {
 	keys := Map(keyCombination.Keys, func(key KeyCode) KeyCodeView {
 		return KeyCodeView{
-			key:       key,
+			key:       string(key),
 			isPressed: Contains(pressedKeys, key),
 		}
 	})
@@ -32,7 +32,7 @@ func ToKeyCombinationView(keyCombination KeyCombination, pressedKeys []KeyCode) 
 	return KeyCombinationView{
 		keys:        keys,
 		description: keyCombination.Description,
-		application: keyCombination.Application,
+		Application: keyCombination.Application,
 	}
 }
 
@@ -48,4 +48,19 @@ func SortByPressedKeys(views []KeyCombinationView) []KeyCombinationView {
 	})
 
 	return views
+}
+
+func ToText(keyCodes []KeyCodeView) string {
+	return strings.Join(Map(keyCodes, func(key KeyCodeView) string {
+		return string(key.key)
+	}), " + ")
+}
+func Contains(slice []KeyCode, item KeyCode) bool {
+	for _, key := range slice {
+		if item.Matches(key) {
+			return true
+		}
+	}
+
+	return false
 }
