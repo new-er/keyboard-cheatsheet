@@ -1,15 +1,15 @@
 package main
 
-import (
+/*import (
 	"context"
 	"time"
-)
+)*/
 
 const (
 	combinationsFile = "combinations.json"
 )
 
-func main() {
+/*func main() {
 	combinations := KeyCombinationsFromFileOrPanic(combinationsFile)
 	activeWindowChannel := GetActiveWindowTitleChannel()
 	activeWindow := ""
@@ -53,4 +53,4 @@ func main() {
 		})
 
 	}
-}
+}*/
