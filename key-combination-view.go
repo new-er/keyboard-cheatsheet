@@ -28,12 +28,22 @@ func ToKeyCombinationView(keyCombination KeyCombination, pressedKeys []KeyCode) 
 			isPressed: Contains(pressedKeys, key),
 		}
 	})
+  keys = SortByPressedKeysCode(keys)
 
 	return KeyCombinationView{
 		keys:        keys,
 		description: keyCombination.Description,
 		Application: keyCombination.Application,
 	}
+}
+
+func SortByPressedKeysCode(views []KeyCodeView) []KeyCodeView {
+  sort.Slice(views, func(i, j int) bool {
+    return views[i].isPressed && !views[j].isPressed
+  })
+
+  return views
+  
 }
 
 func SortByPressedKeys(views []KeyCombinationView) []KeyCombinationView {
