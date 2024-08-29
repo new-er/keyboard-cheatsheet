@@ -7,26 +7,29 @@
   { "Keys": ["CTRL","TAB", "(SHIFT)"],"Application": "Firefox","Description": "Switch tab (backwards)" },
   { "Keys": ["CTRL","R"],"Application": "Firefox","Description": "Reload" },
   { "Keys": ["F7"],"Application": "Firefox","Description": "Enter caret browsing" },
+  
   { "Keys": ["CTRL","SHIFT","TAB"],"Application": "PowerShell","Description": "Create a new tab" },
+  
   { "Keys": ["CTRL","O"],"Application": "KeePass","Description": "Open KeePass file" },
+  
   { "Keys": ["CTRL","ALT", "BREAK"],"Application": "Citrix","Description": "Display Desktop Viewer Toolbar" },
  
   { "Keys": ["ALT","TAB"],"Application": "Windows","Description": "Switch between open apps" },
-  { "Keys": ["WIN","<1|2|3|4|5|6|7|8|9|0>"],"Application": "Windows","Description": "Switch to application <1..10>" },
+  { "Keys": ["WIN","<1|2|3|4|5|6|7|8|9|0>"],"Application": "Windows","Description": "Switch to application <1..10>", "Disabled": true },
   { "Keys": ["WIN","T"],"Application": "Windows","Description": "Focus windows taskbar" },
   { "Keys": ["ALT","SHIFT", "<←|→>"],"Application": "Windows","Description": "Move window ←|→ when taskbar focused" },
-  { "Keys": ["WIN","SPACE"],"Application": "Windows","Description": "Switch language" },
+  { "Keys": ["WIN","SPACE"],"Application": "Windows","Description": "Switch language", "Disabled": true },
   { "Keys": ["WIN","SHIFT", "S"],"Application": "Windows","Description": "Take Screenshot" },
+  
   { "Keys": ["WIN","SHIFT", "`"],"Application": "PowerToys","Description": "FancyZones Configuration" },
-  { "Keys": ["WIN","PAGEUP"],"Application": "PowerToys","Description": "FancyZones switch window up in current zone" },
-  { "Keys": ["WIN","PAGEDOWN"],"Application": "PowerToys","Description": "FancyZones switch window down in current zone" },
+  { "Keys": ["WIN","<PAGEUP|PAGEDOWN>"],"Application": "PowerToys","Description": "FancyZones switch window up in current zone" },
   { "Keys": ["WIN","CTRL", "ALT", "<1|2|3|4|5|6|7|8|9|0>"],"Application": "PowerToys","Description": "FancyZones switch to layout <1..10>" },
-  { "Keys": ["WIN","CTRL", "SHIFT", "T"],"Application": "PowerToys","Description": "Crop and lock" },
+  { "Keys": ["WIN","CTRL", "SHIFT", "T"],"Application": "PowerToys","Description": "Crop and lock", "Disabled": true  },
   { "Keys": ["WIN","CTRL", "T"],"Application": "PowerToys","Description": "Pin current window" },
   { "Keys": ["CTRL","CTRL"],"Application": "PowerToys","Description": "Find mouse pointer" },
   { "Keys": ["ALT","SPACE"],"Application": "PowerToys","Description": "PowerToys Run" },
   { "Keys": ["WIN","CTRL", "SHIFT", "M"],"Application": "PowerToys","Description": "Screen Ruler" },
-  { "Keys": ["WIN","SHIFT", "/"],"Application": "PowerToys","Description": "Shortcut guide" },
+  { "Keys": ["WIN","SHIFT", "/"],"Application": "PowerToys","Description": "Shortcut guide", "Disabled": true },
   { "Keys": ["WIN","SHIFT", "V"],"Application": "PowerToys","Description": "Advanced Paste" },
   { "Keys": ["WIN","SHIFT", "C"],"Application": "PowerToys","Description": "Color picker" },
   { "Keys": ["WIN","CTRL", "SHIFT", "T"],"Application": "PowerToys","Description": "Crop and lock" }

@@ -22,6 +22,8 @@ const (
 
 func main() {
 	combinations := KeyCombinationsFromFileOrPanic(combinationsFile)
+  combinations = FilterDisabledKeyCombinations(combinations)
+  fmt.Println(combinations)
 	activeWindowChannel := GetActiveWindowTitleChannel()
 	activeWindow := ""
 	activeWindowBinding := binding.BindString(&activeWindow)

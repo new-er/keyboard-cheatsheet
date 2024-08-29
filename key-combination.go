@@ -9,6 +9,7 @@ type KeyCombination struct {
 	Keys        []KeyCode
 	Description string
 	Application string
+  Disabled  bool
 }
 
 func KeyCombinationsToJson(k []KeyCombination) (string, error) {
@@ -61,4 +62,11 @@ func ReadFromFile(filename string) (string, error) {
 		return "", err
 	}
 	return string(data), nil
+}
+
+
+func FilterDisabledKeyCombinations(k []KeyCombination) []KeyCombination {
+  return Filter(k, func(keyCombination KeyCombination) bool {
+    return !keyCombination.Disabled
+  })
 }
