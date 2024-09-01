@@ -23,38 +23,29 @@ const (
 func main() {
 	combinations := KeyCombinationsFromFileOrPanic(combinationsFile)
   combinations = FilterDisabledKeyCombinations(combinations)
-  fmt.Println(combinations)
 	activeWindowChannel := GetActiveWindowTitleChannel()
 	activeWindow := ""
 	activeWindowBinding := binding.BindString(&activeWindow)
-	//activeWindowLabel := widget.NewLabelWithData(binding.StringToStringWithFormat(activeWindowBinding, "activeWindow: %s"))
 
 	pressedKeysChannel := GetPressedKeysChannel()
 	pressedKeys := []KeyCode{}
 	pressedKeysString := ""
 	pressedKeysStringBinding := binding.BindString(&pressedKeysString)
-	//pressedKeysStringLabel := widget.NewLabelWithData(binding.StringToStringWithFormat(pressedKeysStringBinding, "pressedKeys: %s"))
 
 	errorTextChannel := GetErrorChannel()
 	errorText := ""
 	errorTextBinding := binding.BindString(&errorText)
-	//errorTextLabel := widget.NewLabelWithData(binding.StringToStringWithFormat(errorTextBinding, "errorText: %s"))
 
 	sortedKeyCombinations := []KeyCombinationView{}
-	// Create a new list widget.
 	sortedKeyCombinationsList := widget.NewList(
-		// Length function returns the number of items.
 		func() int {
 			return len(sortedKeyCombinations)
 		},
-		// CreateItem function returns the widget for each list item.
 		func() fyne.CanvasObject {
-			// Here, you create the template for list items, which can be updated in UpdateItem.
 			hbox := container.NewHBox()
 			hbox.Add(widget.NewLabel(""))
 			return hbox
 		},
-		// UpdateItem function updates the content of each list item based on its index.
 		func(id widget.ListItemID, item fyne.CanvasObject) {
 			combination := sortedKeyCombinations[id]
 			hBox := item.(*fyne.Container)
