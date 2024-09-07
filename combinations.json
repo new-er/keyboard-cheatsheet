@@ -14,7 +14,7 @@
   { "Keys": ["ALT", "SHIFT", "w"],"Applications": ["Firefox"],"Description": "Close all tabs except this" },
   { "Keys": ["ALT", "<←|→>"],"Applications": ["Firefox"],"Description": "Go to previous|next page" },
   
-  { "Keys": ["CTRL","SHIFT","TAB"],"Applications": ["PowerShell"],"Description": "Create a new tab" },
+  { "Keys": ["CTRL","SHIFT","TAB"],"Applications": ["PowerShell"],"Description": "Create a new tab", "Disabled": true },
   { "Keys": ["CTRL","SHIFT","1"],"Applications": ["PowerShell"],"Description": "Open a new powershell tab" },
   { "Keys": ["CTRL","SHIFT","W"],"Applications": ["PowerShell"],"Description": "Close current tab" },
   
