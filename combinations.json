@@ -10,8 +10,11 @@
   { "Keys": ["CTRL", "L"],"Application": "Firefox","Description": "Jump to navigation bar" },
   { "Keys": ["ALT", "SHIFT", "<F1|F2>"],"Application": "Firefox","Description": "Close all tabs left|right" },
   { "Keys": ["ALT", "SHIFT", "w"],"Application": "Firefox","Description": "Close all tabs except this" },
+  { "Keys": ["ALT", "<←|→>"],"Application": "Firefox","Description": "Go to previous|next page" },
   
   { "Keys": ["CTRL","SHIFT","TAB"],"Application": "PowerShell","Description": "Create a new tab" },
+  { "Keys": ["CTRL","SHIFT","1"],"Application": "PowerShell","Description": "Open a new powershell tab" },
+  { "Keys": ["CTRL","SHIFT","W"],"Application": "PowerShell","Description": "Close current tab" },
   
   { "Keys": ["CTRL","O"],"Application": "KeePass","Description": "Open KeePass file" },
   
