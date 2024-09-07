@@ -8,7 +8,7 @@ import (
 type KeyCombination struct {
 	Keys        []KeyCode
 	Description string
-	Application string
+	Applications []string
   Disabled  bool
 }
 

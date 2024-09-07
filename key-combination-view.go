@@ -12,7 +12,7 @@ type KeyCodeView struct {
 type KeyCombinationView struct {
 	keys        []KeyCodeView
 	description string
-	Application string
+	Applications []string
 }
 
 func ToKeyCombinationViews(keyCombinations []KeyCombination, pressedKeys []KeyCode) []KeyCombinationView {
@@ -33,7 +33,7 @@ func ToKeyCombinationView(keyCombination KeyCombination, pressedKeys []KeyCode) 
 	return KeyCombinationView{
 		keys:        keys,
 		description: keyCombination.Description,
-		Application: keyCombination.Application,
+		Applications: keyCombination.Applications,
 	}
 }
 

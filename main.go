@@ -61,7 +61,7 @@ func main() {
 			}
 			hBox.Add(layout.NewSpacer())
 			hBox.Add(widget.NewLabel(combination.description))
-			hBox.Add(widget.NewLabel(combination.Application))
+			hBox.Add(widget.NewLabel(strings.Join(combination.Applications, ", ")))
 		},
 	)
 
