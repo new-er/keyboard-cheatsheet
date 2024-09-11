@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"image/color"
 	"keyboard-cheatsheet/main/data"
+	"keyboard-cheatsheet/main/windows"
 	"strings"
 	"time"
 
@@ -24,16 +25,16 @@ const (
 func main() {
 	combinations := data.KeyCombinationsFromFileOrPanic(combinationsFile)
 	combinations = data.FilterDisabledKeyCombinations(combinations)
-	activeWindowChannel := GetActiveWindowTitleChannel()
+	activeWindowChannel := windows.GetActiveWindowTitleChannel()
 	activeWindow := ""
 	activeWindowBinding := binding.BindString(&activeWindow)
 
-	pressedKeysChannel := GetPressedKeysChannel()
+	pressedKeysChannel := windows.GetPressedKeysChannel()
 	pressedKeys := []data.KeyCode{}
 	pressedKeysString := ""
 	pressedKeysStringBinding := binding.BindString(&pressedKeysString)
 
-	errorTextChannel := GetErrorChannel()
+	errorTextChannel := windows.GetErrorChannel()
 	errorText := ""
 	errorTextBinding := binding.BindString(&errorText)
 
