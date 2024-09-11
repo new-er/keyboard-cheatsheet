@@ -8,13 +8,13 @@ import (
 
 type KeyCodeView struct {
 	Key       string
-	IsPressed bool
+	isPressed bool
 }
 
 func NewKeyCodeView(key string, isPressed bool) KeyCodeView {
 	return KeyCodeView{
 		Key:       key,
-		IsPressed: isPressed,
+		isPressed: isPressed,
 	}
 }
 func ToText(keyCodes []KeyCodeView) string {
@@ -30,4 +30,12 @@ func Contains(slice []data.KeyCode, item data.KeyCode) bool {
 	}
 
 	return false
+}
+
+func (k *KeyCodeView) IsPressed() bool {
+	return k.isPressed
+}
+
+func (k *KeyCodeView) SetIsPressed(isPressed bool) {
+	k.isPressed = isPressed
 }

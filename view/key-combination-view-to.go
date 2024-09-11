@@ -16,10 +16,12 @@ func ToKeyCombinationView(keyCombination data.KeyCombination) KeyCombinationView
 	keys := linq.Map(keyCombination.Keys, func(key data.KeyCode) KeyCodeView {
 		return KeyCodeView{
 			Key:       string(key),
-			IsPressed: false,
+			isPressed: false,
 		}
 	})
 	keys = SortByPressedKeysCode(keys)
+
+	keysText := ui.NewText(ToText(keys))
 
 	return KeyCombinationView{
 		Keys:                  keys,
@@ -27,5 +29,6 @@ func ToKeyCombinationView(keyCombination data.KeyCombination) KeyCombinationView
 		Applications:          keyCombination.Applications,
 		DescriptionText:       ui.NewText(keyCombination.Description),
 		ApplicationsContainer: NewApplicationsView(keyCombination.Applications),
+		KeysText:              keysText,
 	}
 }

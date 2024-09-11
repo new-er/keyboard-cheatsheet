@@ -7,7 +7,7 @@ import (
 
 func SortByPressedKeysCode(views []KeyCodeView) []KeyCodeView {
 	sort.Slice(views, func(i, j int) bool {
-		return views[i].IsPressed && !views[j].IsPressed
+		return views[i].IsPressed() && !views[j].IsPressed()
 	})
 
 	return views
@@ -17,10 +17,10 @@ func SortByPressedKeysCode(views []KeyCodeView) []KeyCodeView {
 func SortByPressedKeys(views []KeyCombinationView) []KeyCombinationView {
 	sort.Slice(views, func(i, j int) bool {
 		countI := linq.Count(views[i].Keys, func(key KeyCodeView) bool {
-			return key.IsPressed
+			return key.IsPressed()
 		})
 		countJ := linq.Count(views[j].Keys, func(key KeyCodeView) bool {
-			return key.IsPressed
+			return key.IsPressed()
 		})
 		return countI > countJ
 	})

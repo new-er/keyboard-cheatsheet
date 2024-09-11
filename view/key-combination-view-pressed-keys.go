@@ -14,7 +14,7 @@ func UpdatePressedKeys(keyCombinations []KeyCombinationView, pressedKeys []data.
 
 func updatePressedKeyCodeViews(keys []KeyCodeView, pressedKeys []data.KeyCode) []KeyCodeView {
 	for i := range keys {
-		keys[i].IsPressed = isPressed(pressedKeys, keys[i])
+		keys[i].SetIsPressed(isPressed(pressedKeys, keys[i]))
 	}
 
 	return keys

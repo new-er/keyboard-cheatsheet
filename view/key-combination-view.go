@@ -12,4 +12,5 @@ type KeyCombinationView struct {
 
 	ApplicationsContainer *fyne.Container
 	DescriptionText       *canvas.Text
+	KeysText              *canvas.Text
 }

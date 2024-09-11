@@ -54,7 +54,7 @@ func main() {
 			for _, key := range combination.Keys {
 				text := ui.NewText(key.Key + " ")
 				text.Alignment = fyne.TextAlignCenter
-				if key.IsPressed {
+				if key.IsPressed() {
 					text.Color = color.RGBA{0, 255, 0, 255}
 					text.TextStyle = fyne.TextStyle{Bold: true}
 				}
