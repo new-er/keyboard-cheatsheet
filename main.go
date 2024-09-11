@@ -5,6 +5,7 @@ import (
 	"image/color"
 	"keyboard-cheatsheet/main/data"
 	"keyboard-cheatsheet/main/ui"
+	"keyboard-cheatsheet/main/view"
 	"keyboard-cheatsheet/main/windows"
 	"time"
 
@@ -30,7 +31,7 @@ func main() {
 
 	errorTextChannel := windows.GetErrorChannel()
 
-	sortedKeyCombinations := []KeyCombinationView{}
+	sortedKeyCombinations := []view.KeyCombinationView{}
 	sortedKeyCombinationsList := widget.NewList(
 		func() int {
 			return len(sortedKeyCombinations)
@@ -44,10 +45,10 @@ func main() {
 			combination := sortedKeyCombinations[id]
 			hBox := item.(*fyne.Container)
 			hBox.RemoveAll()
-			for _, key := range combination.keys {
-				text := ui.NewText(key.key + " ")
+			for _, key := range combination.Keys {
+				text := ui.NewText(key.Key + " ")
 				text.Alignment = fyne.TextAlignCenter
-				if key.isPressed {
+				if key.IsPressed {
 					text.Color = color.RGBA{0, 255, 0, 255}
 					text.TextStyle = fyne.TextStyle{Bold: true}
 				}
@@ -84,8 +85,8 @@ func main() {
 			}
 
 			filtered := data.FilterByApplications(combinations, []string{"Windows", "PowerToys", activeWindow})
-			transformedKeyCombinations := ToKeyCombinationViews(filtered, pressedKeys)
-			sortedKeyCombinations = SortByPressedKeys(transformedKeyCombinations)
+			transformedKeyCombinations := view.ToKeyCombinationViews(filtered, pressedKeys)
+			sortedKeyCombinations = view.SortByPressedKeys(transformedKeyCombinations)
 			sortedKeyCombinationsList.Refresh()
 		}
 	}()

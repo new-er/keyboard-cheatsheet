@@ -1,4 +1,4 @@
-package main
+package view
 
 import (
 	"keyboard-cheatsheet/main/ui"
@@ -12,7 +12,7 @@ var (
 	icons = make(map[string]fyne.CanvasObject)
 )
 
-func GetImageOrText(application string) fyne.CanvasObject {
+func CachedImageOrTextView(application string) fyne.CanvasObject {
 	// Check if the icon is already cached
 	if icon, exists := icons[application]; exists {
 		return icon
