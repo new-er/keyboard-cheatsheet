@@ -3,6 +3,7 @@ package main
 import (
 	"keyboard-cheatsheet/main/data"
 	"keyboard-cheatsheet/main/linq"
+	"keyboard-cheatsheet/main/ui"
 	"sort"
 	"strings"
 
@@ -43,7 +44,7 @@ func ToKeyCombinationView(keyCombination data.KeyCombination, pressedKeys []data
 		keys:                  keys,
 		description:           keyCombination.Description,
 		Applications:          keyCombination.Applications,
-		DescriptionText:       NewText(keyCombination.Description),
+		DescriptionText:       ui.NewText(keyCombination.Description),
 		ApplicationsContainer: NewApplications(keyCombination.Applications),
 	}
 }

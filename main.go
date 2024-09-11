@@ -2,18 +2,15 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"image/color"
 	"keyboard-cheatsheet/main/data"
+	"keyboard-cheatsheet/main/ui"
 	"keyboard-cheatsheet/main/windows"
-	"strings"
 	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
@@ -27,16 +24,11 @@ func main() {
 	combinations = data.FilterDisabledKeyCombinations(combinations)
 	activeWindowChannel := windows.GetActiveWindowTitleChannel()
 	activeWindow := ""
-	activeWindowBinding := binding.BindString(&activeWindow)
 
 	pressedKeysChannel := windows.GetPressedKeysChannel()
 	pressedKeys := []data.KeyCode{}
-	pressedKeysString := ""
-	pressedKeysStringBinding := binding.BindString(&pressedKeysString)
 
 	errorTextChannel := windows.GetErrorChannel()
-	errorText := ""
-	errorTextBinding := binding.BindString(&errorText)
 
 	sortedKeyCombinations := []KeyCombinationView{}
 	sortedKeyCombinationsList := widget.NewList(
@@ -45,7 +37,7 @@ func main() {
 		},
 		func() fyne.CanvasObject {
 			hbox := container.NewHBox()
-			hbox.Add(NewText(""))
+			hbox.Add(ui.NewText(""))
 			return hbox
 		},
 		func(id widget.ListItemID, item fyne.CanvasObject) {
@@ -53,7 +45,7 @@ func main() {
 			hBox := item.(*fyne.Container)
 			hBox.RemoveAll()
 			for _, key := range combination.keys {
-				text := NewText(key.key + " ")
+				text := ui.NewText(key.key + " ")
 				text.Alignment = fyne.TextAlignCenter
 				if key.isPressed {
 					text.Color = color.RGBA{0, 255, 0, 255}
@@ -82,7 +74,7 @@ func main() {
 			select {
 			case activeWindow = <-activeWindowChannel:
 			case pressedKeys = <-pressedKeysChannel:
-			case errorText = <-errorTextChannel:
+			case <-errorTextChannel:
 				if cancelResetErrorText != nil {
 					cancelResetErrorText()
 				}
@@ -90,10 +82,6 @@ func main() {
 				ctx, cancelResetErrorText = context.WithCancel(context.Background())
 				go resetErrorText(ctx)
 			}
-
-			activeWindowBinding.Set(activeWindow)
-			errorTextBinding.Set(errorText)
-			pressedKeysStringBinding.Set(ToPressedKeyString(pressedKeys))
 
 			filtered := data.FilterByApplications(combinations, []string{"Windows", "PowerToys", activeWindow})
 			transformedKeyCombinations := ToKeyCombinationViews(filtered, pressedKeys)
@@ -112,26 +100,4 @@ func main() {
 	)
 	w.SetContent(content)
 	w.ShowAndRun()
-}
-
-func ToPressedKeyString(pressedKeys []data.KeyCode) string {
-	pressedKeysInterface := make([]string, len(pressedKeys))
-	for i, key := range pressedKeys {
-		pressedKeysInterface[i] = fmt.Sprint("[", string(key), "]")
-	}
-	return strings.Join(pressedKeysInterface, " ")
-}
-
-func ToKeyCombinationViewsInterface(keyCombinationViews []KeyCombinationView) []interface{} {
-	interfaces := make([]interface{}, len(keyCombinationViews))
-	for i, keyCombinationView := range keyCombinationViews {
-		interfaces[i] = keyCombinationView
-	}
-	return interfaces
-}
-
-func NewText(text string) *canvas.Text {
-	canvasText := canvas.NewText(text, color.White)
-	canvasText.TextSize = 30
-	return canvasText
 }

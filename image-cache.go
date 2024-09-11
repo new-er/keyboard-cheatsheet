@@ -1,6 +1,7 @@
 package main
 
 import (
+	"keyboard-cheatsheet/main/ui"
 	"os"
 
 	"fyne.io/fyne/v2"
@@ -26,7 +27,7 @@ func GetImageOrText(application string) fyne.CanvasObject {
 		return image
 	}
 
-	text := NewText(application)
+	text := ui.NewText(application)
 	icons[application] = text // Cache the text
 	return text
 }
