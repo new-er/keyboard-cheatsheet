@@ -21,8 +21,14 @@ const (
 )
 
 func main() {
+	a := app.NewWithID("key-combinations")
+	w := a.NewWindow("Key Combinations")
+	w.Resize(fyne.NewSize(800, 600))
+
 	combinations := data.KeyCombinationsFromFileOrPanic(combinationsFile)
 	combinations = data.FilterDisabledKeyCombinations(combinations)
+	combinationViews := view.ToKeyCombinationViews(combinations)
+
 	activeWindowChannel := windows.GetActiveWindowTitleChannel()
 	activeWindow := ""
 
@@ -83,17 +89,12 @@ func main() {
 				ctx, cancelResetErrorText = context.WithCancel(context.Background())
 				go resetErrorText(ctx)
 			}
-
-			filtered := data.FilterByApplications(combinations, []string{"Windows", "PowerToys", activeWindow})
-			transformedKeyCombinations := view.ToKeyCombinationViews(filtered, pressedKeys)
-			sortedKeyCombinations = view.SortByPressedKeys(transformedKeyCombinations)
+			filtered := view.FilterByApplications(combinationViews, []string{"Windows", "PowerToys", activeWindow})
+			filtered = view.UpdatePressedKeys(filtered, pressedKeys)
+			sortedKeyCombinations = view.SortByPressedKeys(filtered)
 			sortedKeyCombinationsList.Refresh()
 		}
 	}()
-
-	a := app.NewWithID("key-combinations")
-	w := a.NewWindow("Key Combinations")
-	w.Resize(fyne.NewSize(800, 600))
 
 	content := container.New(
 		layout.NewStackLayout(),

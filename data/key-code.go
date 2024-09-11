@@ -325,9 +325,13 @@ func ToKeycodes(key int) []KeyCode {
 	return keycodes
 }
 
-func (k KeyCode) Matches(pressedKey KeyCode) bool {
+func (k KeyCode) MatchesKeyCode(pressedKey KeyCode) bool {
 	kString := string(k)
 	pressedKeyString := string(pressedKey)
+	return MatchesKeyString(kString, pressedKeyString)
+}
+
+func MatchesKeyString(kString string, pressedKeyString string) bool {
 	if strings.HasPrefix(kString, "<") && strings.HasSuffix(kString, ">") {
 		withoutBrackets := kString[1 : len(kString)-1]
 		split := strings.Split(withoutBrackets, "|")
@@ -341,5 +345,5 @@ func (k KeyCode) Matches(pressedKey KeyCode) bool {
 		withoutBrackets := kString[1 : len(kString)-1]
 		return withoutBrackets == pressedKeyString
 	}
-	return k == pressedKey
+	return kString == pressedKeyString
 }

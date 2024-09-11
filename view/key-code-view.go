@@ -24,7 +24,7 @@ func ToText(keyCodes []KeyCodeView) string {
 }
 func Contains(slice []data.KeyCode, item data.KeyCode) bool {
 	for _, key := range slice {
-		if item.Matches(key) {
+		if item.MatchesKeyCode(key) {
 			return true
 		}
 	}

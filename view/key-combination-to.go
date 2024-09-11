@@ -6,17 +6,17 @@ import (
 	"keyboard-cheatsheet/main/ui"
 )
 
-func ToKeyCombinationViews(keyCombinations []data.KeyCombination, pressedKeys []data.KeyCode) []KeyCombinationView {
+func ToKeyCombinationViews(keyCombinations []data.KeyCombination) []KeyCombinationView {
 	return linq.Map(keyCombinations, func(keyCombination data.KeyCombination) KeyCombinationView {
-		return ToKeyCombinationView(keyCombination, pressedKeys)
+		return ToKeyCombinationView(keyCombination)
 	})
 }
 
-func ToKeyCombinationView(keyCombination data.KeyCombination, pressedKeys []data.KeyCode) KeyCombinationView {
+func ToKeyCombinationView(keyCombination data.KeyCombination) KeyCombinationView {
 	keys := linq.Map(keyCombination.Keys, func(key data.KeyCode) KeyCodeView {
 		return KeyCodeView{
 			Key:       string(key),
-			IsPressed: Contains(pressedKeys, key),
+			IsPressed: false,
 		}
 	})
 	keys = SortByPressedKeysCode(keys)
