@@ -58,7 +58,7 @@ func main() {
 					text.Color = color.RGBA{0, 255, 0, 255}
 					text.TextStyle = fyne.TextStyle{Bold: true}
 				}
-				hBox.Add(text)
+				hBox.Add(key.CanvasText())
 			}
 			hBox.Add(layout.NewSpacer())
 			hBox.Add(combination.DescriptionText)
