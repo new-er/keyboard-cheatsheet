@@ -1,0 +1,44 @@
+[
+
+  { "Keys": ["CTRL","TAB", "(SHIFT)"],"Applications": ["Firefox", "PowerShell"],"Description": "Switch tab (backwards)" },
+
+  { "Keys": ["/"],"Applications": ["Google Suche"],"Description": "Jump to search bar" },
+  { "Keys": ["CTRL","T"],"Applications": ["Firefox"],"Description": "Open a new tab" },
+  { "Keys": ["CTRL","W"],"Applications": ["Firefox"],"Description": "Close the current tab" },
+  { "Keys": ["CTRL","F4"],"Applications": ["Firefox"],"Description": "Close the current tab" },
+  { "Keys": ["CTRL","SHIFT","T"],"Applications": ["Firefox"],"Description": "Reopen the last closed tab" },
+  { "Keys": ["CTRL","R"],"Applications": ["Firefox"],"Description": "Reload" },
+  { "Keys": ["F7"],"Applications": ["Firefox"],"Description": "Enter caret browsing" },
+  { "Keys": ["CTRL", "L"],"Applications": ["Firefox"],"Description": "Jump to navigation bar" },
+  { "Keys": ["ALT", "SHIFT", "<F1|F2>"],"Applications": ["Firefox"],"Description": "Close all tabs left|right" },
+  { "Keys": ["ALT", "SHIFT", "w"],"Applications": ["Firefox"],"Description": "Close all tabs except this" },
+  { "Keys": ["ALT", "<←|→>"],"Applications": ["Firefox"],"Description": "Go to previous|next page" },
+  
+  { "Keys": ["CTRL","SHIFT","TAB"],"Applications": ["PowerShell"],"Description": "Create a new tab", "Disabled": true },
+  { "Keys": ["CTRL","SHIFT","1"],"Applications": ["PowerShell"],"Description": "Open a new powershell tab" },
+  { "Keys": ["CTRL","SHIFT","W"],"Applications": ["PowerShell"],"Description": "Close current tab" },
+  
+  { "Keys": ["CTRL","O"],"Applications": ["KeePass"],"Description": "Open KeePass file" },
+  
+  { "Keys": ["CTRL","ALT", "BREAK"],"Applications": ["Citrix"],"Description": "Display Desktop Viewer Toolbar" },
+ 
+  { "Keys": ["ALT","TAB"],"Applications": ["Windows"],"Description": "Switch between open apps" },
+  { "Keys": ["WIN","<1|2|3|4|5|6|7|8|9|0>"],"Applications": ["Windows"],"Description": "Switch to application <1..10>", "Disabled": true },
+  { "Keys": ["WIN","T"],"Applications": ["Windows"],"Description": "Focus windows taskbar" },
+  { "Keys": ["ALT","SHIFT", "<←|→>"],"Applications": ["Windows"],"Description": "Move window ←|→ when taskbar focused" },
+  { "Keys": ["WIN","SPACE"],"Applications": ["Windows"],"Description": "Switch language", "Disabled": true },
+  { "Keys": ["WIN","SHIFT", "S"],"Applications": ["Windows"],"Description": "Take Screenshot" },
+  
+  { "Keys": ["WIN","SHIFT", "`"],"Applications": ["PowerToys"],"Description": "FancyZones Configuration" },
+  { "Keys": ["WIN","<PAGEUP|PAGEDOWN>"],"Applications": ["PowerToys"],"Description": "FancyZones switch window up in current zone" },
+  { "Keys": ["WIN","CTRL", "ALT", "<1|2|3|4|5|6|7|8|9|0>"],"Applications": ["PowerToys"],"Description": "FancyZones switch to layout <1..10>" },
+  { "Keys": ["WIN","CTRL", "SHIFT", "T"],"Applications": ["PowerToys"],"Description": "Crop and lock", "Disabled": true  },
+  { "Keys": ["WIN","CTRL", "T"],"Applications": ["PowerToys"],"Description": "Pin current window" },
+  { "Keys": ["CTRL","CTRL"],"Applications": ["PowerToys"],"Description": "Find mouse pointer" },
+  { "Keys": ["ALT","SPACE"],"Applications": ["PowerToys"],"Description": "PowerToys Run" },
+  { "Keys": ["WIN","CTRL", "SHIFT", "M"],"Applications": ["PowerToys"],"Description": "Screen Ruler" },
+  { "Keys": ["WIN","SHIFT", "/"],"Applications": ["PowerToys"],"Description": "Shortcut guide", "Disabled": true },
+  { "Keys": ["WIN","SHIFT", "V"],"Applications": ["PowerToys"],"Description": "Advanced Paste" },
+  { "Keys": ["WIN","SHIFT", "C"],"Applications": ["PowerToys"],"Description": "Color picker" },
+  { "Keys": ["WIN","CTRL", "SHIFT", "T"],"Applications": ["PowerToys"],"Description": "Crop and lock" }
+]

@@ -1,53 +1,105 @@
 package main
 
 import (
-    "fmt"
-    "syscall"
-    "unsafe"
-    "golang.org/x/sys/windows"
+	"context"
+	"image/color"
+	"keyboard-cheatsheet/main/data"
+	"keyboard-cheatsheet/main/ui"
+	"keyboard-cheatsheet/main/view"
+	"keyboard-cheatsheet/main/windows"
+	"time"
+
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/widget"
 )
 
-var (
-	mod 					= windows.NewLazyDLL("user32.dll")
-	procGetWindowText   	= mod.NewProc("GetWindowTextW")
-	procGetWindowTextLength = mod.NewProc("GetWindowTextLengthW")
+const (
+	combinationsFile = "combinations.json"
 )
-
-type (
-	HANDLE uintptr
-	HWND HANDLE
-)
-
-func GetWindowTextLength(hwnd HWND) int {
-	ret, _, _ := procGetWindowTextLength.Call(
-		uintptr(hwnd))
-
-	return int(ret)
-}
-
-func GetWindowText(hwnd HWND) string {
-	textLen := GetWindowTextLength(hwnd) + 1
-
-	buf := make([]uint16, textLen)
-	procGetWindowText.Call(
-		uintptr(hwnd),
-		uintptr(unsafe.Pointer(&buf[0])),
-		uintptr(textLen))
-
-	return syscall.UTF16ToString(buf)
-}
-
-func getWindow(funcName string) uintptr {
-    proc := mod.NewProc(funcName)
-    hwnd, _, _ := proc.Call()
-    return hwnd
-}
 
 func main() {
-  for {
-		if hwnd := getWindow("GetForegroundWindow") ; hwnd != 0 {
-			text := GetWindowText(HWND(hwnd))
-			fmt.Println("window :", text, "# hwnd:", hwnd)
+	a := app.NewWithID("key-combinations")
+	w := a.NewWindow("Key Combinations")
+	w.Resize(fyne.NewSize(800, 600))
+
+	combinations := data.KeyCombinationsFromFileOrPanic(combinationsFile)
+	combinations = data.FilterDisabledKeyCombinations(combinations)
+	combinationViews := view.ToKeyCombinationViews(combinations)
+
+	activeWindowChannel := windows.GetActiveWindowTitleChannel()
+	activeWindow := ""
+
+	pressedKeysChannel := windows.GetPressedKeysChannel()
+	pressedKeys := []data.KeyCode{}
+
+	errorTextChannel := windows.GetErrorChannel()
+
+	sortedKeyCombinations := []view.KeyCombinationView{}
+	sortedKeyCombinationsList := widget.NewList(
+		func() int {
+			return len(sortedKeyCombinations)
+		},
+		func() fyne.CanvasObject {
+			hbox := container.NewHBox()
+			hbox.Add(ui.NewText(""))
+			return hbox
+		},
+		func(id widget.ListItemID, item fyne.CanvasObject) {
+			combination := sortedKeyCombinations[id]
+			hBox := item.(*fyne.Container)
+			hBox.RemoveAll()
+			for _, key := range combination.Keys {
+				text := ui.NewText(key.Key + " ")
+				text.Alignment = fyne.TextAlignCenter
+				if key.IsPressed() {
+					text.Color = color.RGBA{0, 255, 0, 255}
+					text.TextStyle = fyne.TextStyle{Bold: true}
+				}
+				hBox.Add(key.CanvasText())
+			}
+			hBox.Add(layout.NewSpacer())
+			hBox.Add(combination.DescriptionText)
+			hBox.Add(combination.ApplicationsContainer)
+		},
+	)
+
+	var cancelResetErrorText context.CancelFunc
+	resetErrorText := func(ctx context.Context) {
+		select {
+		case <-time.After(3 * time.Second):
+			errorTextChannel <- ""
+		case <-ctx.Done():
 		}
 	}
+
+	go func() {
+
+		for {
+			select {
+			case activeWindow = <-activeWindowChannel:
+			case pressedKeys = <-pressedKeysChannel:
+			case <-errorTextChannel:
+				if cancelResetErrorText != nil {
+					cancelResetErrorText()
+				}
+				var ctx context.Context
+				ctx, cancelResetErrorText = context.WithCancel(context.Background())
+				go resetErrorText(ctx)
+			}
+			filtered := view.FilterByApplications(combinationViews, []string{"Windows", "PowerToys", activeWindow})
+			filtered = view.UpdatePressedKeys(filtered, pressedKeys)
+			sortedKeyCombinations = view.SortByPressedKeys(filtered)
+			sortedKeyCombinationsList.Refresh()
+		}
+	}()
+
+	content := container.New(
+		layout.NewStackLayout(),
+		sortedKeyCombinationsList,
+	)
+	w.SetContent(content)
+	w.ShowAndRun()
 }
