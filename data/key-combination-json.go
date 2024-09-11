@@ -1,16 +1,9 @@
-package main
+package data
 
 import (
 	"encoding/json"
 	"os"
 )
-
-type KeyCombination struct {
-	Keys         []KeyCode
-	Description  string
-	Applications []string
-	Disabled     bool
-}
 
 func KeyCombinationsToJson(k []KeyCombination) (string, error) {
 	jsonData, err := json.MarshalIndent(k, "", "  ")
@@ -62,10 +55,4 @@ func ReadFromFile(filename string) (string, error) {
 		return "", err
 	}
 	return string(data), nil
-}
-
-func FilterDisabledKeyCombinations(k []KeyCombination) []KeyCombination {
-	return Filter(k, func(keyCombination KeyCombination) bool {
-		return !keyCombination.Disabled
-	})
 }

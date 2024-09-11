@@ -1,4 +1,4 @@
-package main
+package linq
 
 func Map[T any, U any](slice []T, fn func(T) U) []U {
 	result := make([]U, len(slice))

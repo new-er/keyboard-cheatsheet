@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"image/color"
+	"keyboard-cheatsheet/main/data"
 	"strings"
 	"time"
 
@@ -21,14 +22,14 @@ const (
 )
 
 func main() {
-	combinations := KeyCombinationsFromFileOrPanic(combinationsFile)
-	combinations = FilterDisabledKeyCombinations(combinations)
+	combinations := data.KeyCombinationsFromFileOrPanic(combinationsFile)
+	combinations = data.FilterDisabledKeyCombinations(combinations)
 	activeWindowChannel := GetActiveWindowTitleChannel()
 	activeWindow := ""
 	activeWindowBinding := binding.BindString(&activeWindow)
 
 	pressedKeysChannel := GetPressedKeysChannel()
-	pressedKeys := []KeyCode{}
+	pressedKeys := []data.KeyCode{}
 	pressedKeysString := ""
 	pressedKeysStringBinding := binding.BindString(&pressedKeysString)
 
@@ -93,7 +94,7 @@ func main() {
 			errorTextBinding.Set(errorText)
 			pressedKeysStringBinding.Set(ToPressedKeyString(pressedKeys))
 
-			filtered := FilterByApplications(combinations, []string{"Windows", "PowerToys", activeWindow})
+			filtered := data.FilterByApplications(combinations, []string{"Windows", "PowerToys", activeWindow})
 			transformedKeyCombinations := ToKeyCombinationViews(filtered, pressedKeys)
 			sortedKeyCombinations = SortByPressedKeys(transformedKeyCombinations)
 			sortedKeyCombinationsList.Refresh()
@@ -112,7 +113,7 @@ func main() {
 	w.ShowAndRun()
 }
 
-func ToPressedKeyString(pressedKeys []KeyCode) string {
+func ToPressedKeyString(pressedKeys []data.KeyCode) string {
 	pressedKeysInterface := make([]string, len(pressedKeys))
 	for i, key := range pressedKeys {
 		pressedKeysInterface[i] = fmt.Sprint("[", string(key), "]")

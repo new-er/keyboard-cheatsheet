@@ -1,13 +1,14 @@
 package main
 
 import (
+	"keyboard-cheatsheet/main/data"
 	"reflect"
 	"time"
 )
 
-func GetPressedKeysChannel() chan []KeyCode {
-	currentPressedKeys := []KeyCode{}
-	pressedKeysChannel := make(chan []KeyCode)
+func GetPressedKeysChannel() chan []data.KeyCode {
+	currentPressedKeys := []data.KeyCode{}
+	pressedKeysChannel := make(chan []data.KeyCode)
 
 	go func() {
 		for {

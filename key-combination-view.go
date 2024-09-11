@@ -1,6 +1,8 @@
 package main
 
 import (
+	"keyboard-cheatsheet/main/data"
+	"keyboard-cheatsheet/main/linq"
 	"sort"
 	"strings"
 
@@ -22,14 +24,14 @@ type KeyCombinationView struct {
 	DescriptionText       *canvas.Text
 }
 
-func ToKeyCombinationViews(keyCombinations []KeyCombination, pressedKeys []KeyCode) []KeyCombinationView {
-	return Map(keyCombinations, func(keyCombination KeyCombination) KeyCombinationView {
+func ToKeyCombinationViews(keyCombinations []data.KeyCombination, pressedKeys []data.KeyCode) []KeyCombinationView {
+	return linq.Map(keyCombinations, func(keyCombination data.KeyCombination) KeyCombinationView {
 		return ToKeyCombinationView(keyCombination, pressedKeys)
 	})
 }
 
-func ToKeyCombinationView(keyCombination KeyCombination, pressedKeys []KeyCode) KeyCombinationView {
-	keys := Map(keyCombination.Keys, func(key KeyCode) KeyCodeView {
+func ToKeyCombinationView(keyCombination data.KeyCombination, pressedKeys []data.KeyCode) KeyCombinationView {
+	keys := linq.Map(keyCombination.Keys, func(key data.KeyCode) KeyCodeView {
 		return KeyCodeView{
 			key:       string(key),
 			isPressed: Contains(pressedKeys, key),
@@ -57,10 +59,10 @@ func SortByPressedKeysCode(views []KeyCodeView) []KeyCodeView {
 
 func SortByPressedKeys(views []KeyCombinationView) []KeyCombinationView {
 	sort.Slice(views, func(i, j int) bool {
-		countI := Count(views[i].keys, func(key KeyCodeView) bool {
+		countI := linq.Count(views[i].keys, func(key KeyCodeView) bool {
 			return key.isPressed
 		})
-		countJ := Count(views[j].keys, func(key KeyCodeView) bool {
+		countJ := linq.Count(views[j].keys, func(key KeyCodeView) bool {
 			return key.isPressed
 		})
 		return countI > countJ
@@ -70,11 +72,11 @@ func SortByPressedKeys(views []KeyCombinationView) []KeyCombinationView {
 }
 
 func ToText(keyCodes []KeyCodeView) string {
-	return strings.Join(Map(keyCodes, func(key KeyCodeView) string {
+	return strings.Join(linq.Map(keyCodes, func(key KeyCodeView) string {
 		return string(key.key)
 	}), " + ")
 }
-func Contains(slice []KeyCode, item KeyCode) bool {
+func Contains(slice []data.KeyCode, item data.KeyCode) bool {
 	for _, key := range slice {
 		if item.Matches(key) {
 			return true
