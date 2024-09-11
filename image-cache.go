@@ -1,31 +1,34 @@
-package viewmodel
+package main
 
 import (
-	"keyboard-cheatsheet/main/ui"
 	"os"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
-	"fyne.io/fyne/v2/container"
 )
 
-func NewApplications(applications []string) *fyne.Container {
-	hBox := container.NewHBox()
-	for _, application := range applications {
-		hBox.Add(NewApplication(application))
-	}
-	return hBox
-}
+var (
+	icons = make(map[string]fyne.CanvasObject)
+)
 
-func NewApplication(application string) fyne.CanvasObject {
+func GetImageOrText(application string) fyne.CanvasObject {
+	// Check if the icon is already cached
+	if icon, exists := icons[application]; exists {
+		return icon
+	}
+
 	imagePath := "./icons/" + application + ".png"
 	if FileExists(imagePath) {
 		image := canvas.NewImageFromFile(imagePath)
 		image.FillMode = canvas.ImageFillStretch
 		image.SetMinSize(fyne.NewSize(30, 30))
+		icons[application] = image // Cache the image
 		return image
 	}
-	return ui.NewText(application)
+
+	text := NewText(application)
+	icons[application] = text // Cache the text
+	return text
 }
 
 func FileExists(filename string) bool {

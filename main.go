@@ -4,9 +4,6 @@ import (
 	"context"
 	"fmt"
 	"image/color"
-	"keyboard-cheatsheet/main/data"
-	"keyboard-cheatsheet/main/repository"
-	"keyboard-cheatsheet/main/viewmodel"
 	"strings"
 	"time"
 
@@ -24,12 +21,6 @@ const (
 )
 
 func main() {
-	combinations2 := data.KeyCombinationsFromFileOrPanic(combinationsFile)
-	combinations2 = data.FilterDisabledKeyCombinations(combinations2)
-
-	repository := repository.NewRepository(combinations2)
-	viewModel := viewmodel.NewViewModel(repository)
-
 	combinations := KeyCombinationsFromFileOrPanic(combinationsFile)
 	combinations = FilterDisabledKeyCombinations(combinations)
 	activeWindowChannel := GetActiveWindowTitleChannel()
@@ -60,7 +51,7 @@ func main() {
 			hBox := item.(*fyne.Container)
 			hBox.RemoveAll()
 			for _, key := range combination.keys {
-				text := NewText(key.key)
+				text := NewText(key.key + " ")
 				text.Alignment = fyne.TextAlignCenter
 				if key.isPressed {
 					text.Color = color.RGBA{0, 255, 0, 255}
@@ -115,8 +106,7 @@ func main() {
 
 	content := container.New(
 		layout.NewStackLayout(),
-		viewModel.GetList(),
-		//sortedKeyCombinationsList,
+		sortedKeyCombinationsList,
 	)
 	w.SetContent(content)
 	w.ShowAndRun()
