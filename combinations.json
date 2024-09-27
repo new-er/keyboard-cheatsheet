@@ -21,6 +21,8 @@
   { "Keys": ["CTRL","O"],"Applications": ["KeePass"],"Description": "Open KeePass file" },
   
   { "Keys": ["CTRL","ALT", "BREAK"],"Applications": ["Citrix"],"Description": "Display Desktop Viewer Toolbar" },
+  
+  { "Keys": ["CTRL","SHIFT", "N"],"Applications": ["File Explorer"],"Description": "Create new directory" },
  
   { "Keys": ["ALT","TAB"],"Applications": ["Windows"],"Description": "Switch between open apps" },
   { "Keys": ["WIN","<1|2|3|4|5|6|7|8|9|0>"],"Applications": ["Windows"],"Description": "Switch to application <1..10>", "Disabled": true },
@@ -28,6 +30,7 @@
   { "Keys": ["ALT","SHIFT", "<←|→>"],"Applications": ["Windows"],"Description": "Move window ←|→ when taskbar focused" },
   { "Keys": ["WIN","SPACE"],"Applications": ["Windows"],"Description": "Switch language", "Disabled": true },
   { "Keys": ["WIN","SHIFT", "S"],"Applications": ["Windows"],"Description": "Take Screenshot" },
+  { "Keys": ["WIN","M"],"Applications": ["Windows"],"Description": "Minimize window" },
   
   { "Keys": ["WIN","SHIFT", "`"],"Applications": ["PowerToys"],"Description": "FancyZones Configuration" },
   { "Keys": ["WIN","<PAGEUP|PAGEDOWN>"],"Applications": ["PowerToys"],"Description": "FancyZones switch window up in current zone" },

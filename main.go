@@ -98,7 +98,7 @@ func main() {
 
 	content := container.New(
 		layout.NewStackLayout(),
-		sortedKeyCombinationsList,
+    sortedKeyCombinationsList,
 	)
 	w.SetContent(content)
 	w.ShowAndRun()
