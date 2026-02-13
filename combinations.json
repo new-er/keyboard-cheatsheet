@@ -1,0 +1,54 @@
+[
+  { "Keys": "/","Applications": ["Google"],"Description": "Jump to search bar" },
+  { "Keys": "ctrl+t","Applications": ["Firefox"],"Description": "Open a new tab" },
+  { "Keys": "ctrl+w","Applications": ["Firefox"],"Description": "Close the current tab" },
+  { "Keys": "ctrl+F4","Applications": ["Firefox"],"Description": "Close the current tab" },
+  { "Keys": "ctrl+shift+t" ,"Applications": ["Firefox"],"Description": "Reopen the last closed tab" },
+  { "Keys": "ctrl+t", "Applications": ["Firefox"],"Description": "Reload" },
+  { "Keys": "F7","Applications": ["Firefox"],"Description": "Enter caret browsing" },
+  { "Keys": "ctrl+l","Applications": ["Firefox"],"Description": "Jump to navigation bar" },
+  { "Keys": "alt+shift+(f1|f2)","Applications": ["Firefox"],"Description": "Close all tabs left|right" },
+  { "Keys": "alt+shift+w","Applications": ["Firefox"],"Description": "Close all tabs except this" },
+  { "Keys": "alt+(left|right)","Applications": ["Firefox"],"Description": "Go to previous|next page" },
+  
+  { "Keys": "ctrl+shift+tab","Applications": ["PowerShell"],"Description": "Create a new tab", "Disabled": true },
+  { "Keys": "ctrl+shift+1","Applications": ["PowerShell"],"Description": "Open a new powershell tab" },
+  { "Keys": "ctrl+shift+w","Applications": ["PowerShell"],"Description": "Close current tab" },
+
+  { "Keys": "ctrl+tab+shift?","Applications": ["Firefox", "PowerShell"],"Description": "Switch tab (backwards)" },
+  
+  { "Keys": "ctrl+o","Applications": ["KeePass"],"Description": "Open KeePass file" },
+
+  { "Keys": "ctrl+f","Applications": ["Bitwarden"],"Description": "Search for password" },
+  { "Keys": "ctrl+p","Applications": ["Bitwarden"],"Description": "Copy password" },
+  
+  { "Keys": "ctrl+alt+BREAK","Applications": ["Citrix"],"Description": "Display Desktop Viewer Toolbar" },
+
+  { "Keys": "ctrl+b c","Applications": ["tmux"],"Description": "Create new window" },
+  { "Keys": "ctrl+b ((shift+5):%|(shift+'):\")","Applications": ["tmux"],"Description": "Split window (horizontally|vertically)" },
+  { "Keys": "ctrl+b .","Applications": ["tmux"],"Description": "Move window to index" },
+  { "Keys": "ctrl+b ,","Applications": ["tmux"],"Description": "Rename window" },
+  { "Keys": "ctrl+b n","Applications": ["tmux"],"Description": "Next window" },
+  { "Keys": "ctrl+b p","Applications": ["tmux"],"Description": "Previous window" },
+
+ 
+  { "Keys": "alt+tab","Applications": ["windows"],"Description": "Switch between open apps", "OS": ["windows"] },
+  { "Keys": "win+(1|2|3|4|5|6|7|8|9|0)","Applications": ["windows"],"Description": "Switch to application <1..10>","OS": ["windows"], "Disabled": true },
+  { "Keys": "win+t","Applications": ["windows"],"Description": "Focus windows taskbar","OS": ["windows"] },
+  { "Keys": "alt+shift+(left|right)","Applications": ["windows"],"Description": "Move window ←|→ when taskbar focused","OS": ["windows"] },
+  { "Keys": "win+space","Applications": ["windows"],"Description": "Switch language","OS": ["windows"], "Disabled": true },
+  { "Keys": "win+shift+s","Applications": ["windows"],"Description": "Take Screenshot","OS": ["windows"] },
+  
+  { "Keys": "win+shift+`","Applications": ["PowerToys"],"Description": "FancyZones Configuration","OS": ["windows"] },
+  { "Keys": "win+(PG_UP|PG_DOWN)","Applications": ["PowerToys"],"Description": "FancyZones switch window up in current zone","OS": ["windows"] },
+  { "Keys": "win+ctrl+alt+(1|2|3|4|5|6|7|8|9|0)","Applications": ["PowerToys"],"Description": "FancyZones switch to layout <1..10>","OS": ["windows"] },
+  { "Keys": "win+ctrl+shift+T","Applications": ["PowerToys"],"Description": "Crop and lock","OS": ["windows"], "Disabled": true  },
+  { "Keys": "win+ctrl+t","Applications": ["PowerToys"],"Description": "Pin current window","OS": ["windows"] },
+  { "Keys": "ctrl+ctrl","Applications": ["PowerToys"],"Description": "Find mouse pointer","OS": ["windows"] },
+  { "Keys": "alt+space","Applications": ["PowerToys"],"Description": "PowerToys Run","OS": ["windows"] },
+  { "Keys": "win+ctrl+shift+m","Applications": ["PowerToys"],"Description": "Screen Ruler","OS": ["windows"] },
+  { "Keys": "win+shift+/","Applications": ["PowerToys"],"Description": "Shortcut guide","OS": ["windows"], "Disabled": true },
+  { "Keys": "win+shift+v","Applications": ["PowerToys"],"Description": "Advanced Paste","OS": ["windows"] },
+  { "Keys": "win+shift+c","Applications": ["PowerToys"],"Description": "Color picker","OS": ["windows"] },
+  { "Keys": "win+ctrl+shift+t","Applications": ["PowerToys"],"Description": "Crop and lock","OS": ["windows"] }
+]
